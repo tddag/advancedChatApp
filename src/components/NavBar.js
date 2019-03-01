@@ -22,7 +22,7 @@ class NavBar extends Component {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <Link class="nav-link" to="/room_chat">
+              <Link class="nav-link" to="/rooms">
                 Room Chat
               </Link>
             </li>

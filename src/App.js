@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import NavBar from './components/NavBar'
-import RoomChat from './components/RoomChat'
+import Rooms from './components/Rooms'
 import Landing from './components/Landing'
 import Users from './components/Users'
 import { Route, Switch } from 'react-router-dom'
@@ -13,7 +13,7 @@ class App extends Component {
         <NavBar />
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route path="/room_chat" component={RoomChat} />
+          <Route path="/rooms" component={Rooms} />
           <Route path="/users" component={Users} />
         </Switch>
       </div>

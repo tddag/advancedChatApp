@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class RoomChat extends Component {
+class Rooms extends Component {
   state = {
     id: 1,
     roomName: '',
@@ -69,4 +69,4 @@ class RoomChat extends Component {
   }
 }
 
-export default RoomChat
+export default Rooms
