@@ -8,6 +8,45 @@ h2 {
   color: #575ed8;
 }
 
+.window {
+  min-height: 500px;
+  max-width: 600px;
+  margin: 30px auto;
+  border: 1px solid #ddd;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+.dot {
+  display: inline-block;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #eee;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+}
+
+.dot-success {
+  background-color: #449d44;
+}
+
+.window-head {
+  background: #f9f9f9;
+  font-weight: bold;
+}
+
+.window-head h2 {
+  max-width: 150px;
+  margin: auto;
+}
+
+.list {
+  max-width: 200px;
+  margin: 20px auto;
+  overflow: auto;
+}
+
 #mario-chat {
   max-width: 600px;
   margin: 30px auto;
