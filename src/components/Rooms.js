@@ -27,6 +27,13 @@ class Rooms extends Component {
     })
   }
   handleSubmit = () => {
+    let { rooms } = this.state
+    rooms.push({
+      name: this.state.roomName,
+    })
+    this.setState({
+      rooms: rooms,
+    })
     fetch('http://localhost:4000/room/create', {
       method: 'POST',
       headers: {

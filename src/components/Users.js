@@ -10,18 +10,19 @@ class Users extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.userName !== nextState.userName) {
-      return true
-    }
-  }
-
   handleChange = e => {
     this.setState({
       userName: e.target.value,
     })
   }
   handleSubmit = () => {
+    let { users } = this.state
+    users.push({
+      name: this.state.userName,
+    })
+    this.setState({
+      users: users,
+    })
     fetch('http://localhost:4000/user/create', {
       method: 'POST',
       headers: {
