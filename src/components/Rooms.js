@@ -41,8 +41,8 @@ class Rooms extends Component {
   render() {
     return (
       <div>
-        <table class="table table-container">
-          <thead class="thead-dark">
+        <table className="table table-container">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Rooms</th>
@@ -51,7 +51,7 @@ class Rooms extends Component {
           </thead>
           <tbody>{this.renderRooms()}</tbody>
         </table>
-        <div class="rooms-container">
+        <div className="rooms-container">
           <input
             type="text"
             placeholder="Create room"

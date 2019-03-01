@@ -8,7 +8,7 @@ class Users extends Component {
   renderUsers = () => {
     return this.state.users.map(user => {
       return (
-        <tr>
+        <tr key={user.id}>
           <th scope="row">{user.id}</th>
           <td>{user.name}</td>
         </tr>
@@ -18,8 +18,8 @@ class Users extends Component {
   render() {
     return (
       <div>
-        <table class="table users-container">
-          <thead class="thead-dark">
+        <table className="table users-container">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Users</th>
