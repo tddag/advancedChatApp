@@ -29,18 +29,20 @@ class Rooms extends Component {
   }
   handleSubmit = () => {
     let rooms = this.state.rooms
+    let id = this.state.id
     rooms.push({
-      id: this.state.id++,
+      id: id++,
       name: this.state.roomName,
     })
     this.setState({
+      id: id++,
       rooms: rooms,
     })
   }
   render() {
     return (
       <div>
-        <table class="table table-container">
+        <table class="table rooms-table-container">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>

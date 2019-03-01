@@ -1,5 +1,13 @@
-.users-container {
-  margin: auto;
+.users-table-container {
+  margin-left: 30px;
   text-align: center;
-  width: 50%;
+  width: 30%;
+  display: inline-table;
+}
+
+.users-container {
+  float: right;
+  margin-right: 30%;
+  display: inline-flex;
+  border: 1px solid #ddd;
 }
