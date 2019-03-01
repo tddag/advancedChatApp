@@ -61,7 +61,7 @@ class Rooms extends Component {
           </thead>
           <tbody>{this.renderRooms()}</tbody>
         </table>
-        <div class="rooms-container">
+        <div className="rooms-container">
           <input
             type="text"
             placeholder="Create room"

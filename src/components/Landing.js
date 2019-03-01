@@ -3,13 +3,13 @@ import React, { Component } from 'react'
 class Landing extends Component {
   render() {
     return (
-      <div class="landing">
-        <div class="dark-overlay landing-inner">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <h1 class="display-3 mb-4">Chat App</h1>
-                <p class="lead">
+      <div className="landing">
+        <div className="dark-overlay landing-inner">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 text-center">
+                <h1 className="display-3 mb-4">Chat App</h1>
+                <p className="lead">
                   Welcome to a Chat App using React and Socket.IO
                 </p>
               </div>

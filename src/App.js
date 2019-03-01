@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import NavBar from './components/NavBar'
+import { NavBar } from './components/NavBar'
 import Rooms from './components/Rooms'
 import Landing from './components/Landing'
 import Users from './components/Users'
