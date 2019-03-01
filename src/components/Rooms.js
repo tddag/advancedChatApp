@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
 class Rooms extends Component {
   state = {
-    id: 1,
     roomName: '',
     rooms: [],
   }
   renderRooms = () => {
-    return this.state.rooms.map(room => {
+    return this.state.rooms.map((room, index) => {
       return (
-        <tr key={room.id}>
-          <th scope="row">{room.id}</th>
+        <tr key={index}>
+          <th scope="row">{index + 1}</th>
           <td>{room.name}</td>
           <td>
             <Link to="/chat">
@@ -28,17 +27,27 @@ class Rooms extends Component {
     })
   }
   handleSubmit = () => {
-    let rooms = this.state.rooms
-    let id = this.state.id
-    rooms.push({
-      id: id++,
-      name: this.state.roomName,
-    })
-    this.setState({
-      id: id++,
-      rooms: rooms,
+    fetch('http://localhost:4000/room/create', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: this.state.roomName,
+      }),
     })
   }
+  componentDidMount() {
+    fetch('http://localhost:4000/room/get/all')
+      .then(res => res.json())
+      .then(rooms => {
+        this.setState({
+          rooms: rooms,
+        })
+      })
+  }
+
   render() {
     return (
       <div>

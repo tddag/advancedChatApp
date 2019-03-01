@@ -2,10 +2,18 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Users.styles.css'
 class Users extends Component {
-  state = {
-    id: 1,
-    userName: '',
-    users: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      userName: '',
+      users: [],
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.userName !== nextState.userName) {
+      return true
+    }
   }
 
   handleChange = e => {
@@ -14,23 +22,31 @@ class Users extends Component {
     })
   }
   handleSubmit = () => {
-    let users = this.state.users
-    let id = this.state.id
-    users.push({
-      id: id++,
-      name: this.state.userName,
-    })
-    this.setState({
-      id: id++,
-      users: users,
+    fetch('http://localhost:4000/user/create', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: this.state.userName,
+      }),
     })
   }
-
+  componentDidMount() {
+    fetch('http://localhost:4000/user/get/all')
+      .then(res => res.json())
+      .then(users => {
+        this.setState({
+          users: users,
+        })
+      })
+  }
   renderUsers = () => {
-    return this.state.users.map(user => {
+    return this.state.users.map((user, index) => {
       return (
-        <tr key={user.id}>
-          <th scope="row">{user.id}</th>
+        <tr key={index}>
+          <th scope="row">{index + 1}</th>
           <td>{user.name}</td>
           <td>
             <Link to="/chat">
