@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './Users.styles.css'
 class Users extends Component {
   state = {
     users: [{ id: 1, name: 'John Doe' }, { id: 2, name: 'Tony Stark' }],
@@ -18,10 +18,7 @@ class Users extends Component {
   render() {
     return (
       <div>
-        <table
-          class="table"
-          style={{ margin: 'auto', textAlign: 'center', width: '50%' }}
-        >
+        <table class="table users-container">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>

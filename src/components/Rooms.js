@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom'
+import './Rooms.styles.css'
 class Rooms extends Component {
   state = {
     id: 1,
@@ -13,7 +14,9 @@ class Rooms extends Component {
           <th scope="row">{room.id}</th>
           <td>{room.name}</td>
           <td>
-            <button>Join</button>
+            <Link to="/chat_window">
+              <button>Join</button>
+            </Link>
           </td>
         </tr>
       )
@@ -37,15 +40,7 @@ class Rooms extends Component {
   render() {
     return (
       <div>
-        <table
-          class="table"
-          style={{
-            marginLeft: '30px',
-            textAlign: 'center',
-            width: '30%',
-            display: 'inline-table',
-          }}
-        >
+        <table class="table table-container">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -55,14 +50,14 @@ class Rooms extends Component {
           </thead>
           <tbody>{this.renderRooms()}</tbody>
         </table>
-        <div style={{ float: 'right', paddingRight: '30%' }}>
+        <div class="rooms-container">
           <input
             type="text"
             placeholder="Create room"
             value={this.state.roomName}
             onChange={this.handleChange}
           />
-          <button onClick={this.handleSubmit}>Create Room</button>
+          <button onClick={this.handleSubmit}>Create</button>
         </div>
       </div>
     )

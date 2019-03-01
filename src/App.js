@@ -4,6 +4,7 @@ import NavBar from './components/NavBar'
 import Rooms from './components/Rooms'
 import Landing from './components/Landing'
 import Users from './components/Users'
+import ChatWindow from './components/ChatWindow'
 import { Route, Switch } from 'react-router-dom'
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/rooms" component={Rooms} />
           <Route path="/users" component={Users} />
+          <Route path="/chat_window" component={ChatWindow} />
         </Switch>
       </div>
     )
