@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import socketIOClient from 'socket.io-client'
 
+var socket
 class NavBar extends Component {
+  constructor() {
+    super()
+    this.state = {
+      endpoint: 'http://localhost:4000',
+    }
+    socket = socketIOClient(this.state.endpoint)
+  }
+
   render() {
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <Link class="navbar-brand" to="/">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Link className="navbar-brand" to="/">
           Chat App
         </Link>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -17,17 +27,17 @@ class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon" />
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <Link class="nav-link" to="/rooms">
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <Link className="nav-link" to="/rooms">
                 Room Chat
               </Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/users">
+            <li className="nav-item">
+              <Link className="nav-link" to="/users">
                 Users
               </Link>
             </li>
@@ -38,4 +48,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar
+export { NavBar, socket }

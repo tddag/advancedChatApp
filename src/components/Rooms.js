@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
 class Rooms extends Component {
   state = {
-    id: 1,
+    id: 0,
     roomName: '',
     rooms: [],
   }
@@ -30,10 +30,11 @@ class Rooms extends Component {
   handleSubmit = () => {
     let rooms = this.state.rooms
     rooms.push({
-      id: this.state.id++,
+      id: this.state.id + 1,
       name: this.state.roomName,
     })
     this.setState({
+      id: this.state.id + 1,
       rooms: rooms,
     })
   }

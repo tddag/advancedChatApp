@@ -21,6 +21,15 @@ const server = http.createServer(app)
 // Create IO using server instance
 const io = socketIO(server)
 
+io.on('connection', socket => {
+  console.log('made socket connection', socket.id)
+
+  socket.on('chat', data => {
+    console.log('chat')
+    io.sockets.emit('chat', data)
+  })
+})
+
 // Use route
 app.use('/api/history', history)
 app.use('/api/room_history', room_history)
