@@ -14,7 +14,7 @@ class Rooms extends Component {
           <th scope="row">{room.id}</th>
           <td>{room.name}</td>
           <td>
-            <Link to="/chat_window">
+            <Link to="/chat">
               <button>Join</button>
             </Link>
           </td>

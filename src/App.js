@@ -16,7 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/rooms" component={Rooms} />
           <Route path="/users" component={Users} />
-          <Route path="/chat_window" component={ChatWindow} />
+          <Route path="/chat" component={ChatWindow} />
         </Switch>
       </div>
     )
