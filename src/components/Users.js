@@ -50,7 +50,7 @@ class Users extends Component {
           <th scope="row">{index + 1}</th>
           <td>{user.name}</td>
           <td>
-            <Link to="/chat">
+            <Link to={`/chat/${user.name}`}>
               <button>Chat</button>
             </Link>
           </td>

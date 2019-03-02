@@ -5,6 +5,7 @@ import { socket } from './NavBar'
 
 class ChatWindow extends Component {
   state = {
+    roomName: '',
     username: '',
     message: '',
     activeUser: [{ id: 1, name: 'John' }, { id: 2, name: 'Tony' }],
@@ -24,12 +25,15 @@ class ChatWindow extends Component {
         messageLog: messageLog,
       })
     })
+    this.setState({
+      roomName: this.props.match.params.name,
+    })
   }
 
   getActiveUser = () => {
-    return this.state.activeUser.map(user => {
+    return this.state.activeUser.map((user, index) => {
       return (
-        <p key={user.id}>
+        <p key={index}>
           <span className="dot dot-success" /> {user.name}
         </p>
       )
@@ -37,8 +41,8 @@ class ChatWindow extends Component {
   }
 
   getEvents = () => {
-    return this.state.events.map(event => {
-      return <p key={event.id}>{event.event}</p>
+    return this.state.events.map((event, index) => {
+      return <p key={index}>{event.event}</p>
     })
   }
 
@@ -70,7 +74,7 @@ class ChatWindow extends Component {
   render() {
     return (
       <Container>
-        <h1> Room #</h1>
+        <h1> Room {this.state.roomName}</h1>
         <Row>
           <Col xs="3">
             <div className="window">

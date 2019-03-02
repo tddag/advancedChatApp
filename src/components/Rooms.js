@@ -13,7 +13,7 @@ class Rooms extends Component {
           <th scope="row">{index + 1}</th>
           <td>{room.name}</td>
           <td>
-            <Link to="/chat">
+            <Link to={`/chat/${room.name}`}>
               <button>Join</button>
             </Link>
           </td>
