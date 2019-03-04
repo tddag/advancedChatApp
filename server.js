@@ -6,7 +6,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const registerUser = require('./back_end/controllers/user')
+const { registerUser } = require('./back_end/controllers/user')
+const { checkHandle } = require('./back_end/controllers/user')
 const createRoom = require('./back_end/controllers/room')
 // DB config
 const db = require('./back_end/config/keys').mongoURI
@@ -49,11 +50,16 @@ io.on('connection', socket => {
 
   socket.on('chat', data => {
     console.log('chat')
-    io.sockets.emit('chat', data)
+    io.emit('chat', data)
   })
 
   socket.on('registerUser', data => {
     registerUser(io, data)
+  })
+
+  socket.on('checkHandle', data => {
+    console.log('check handle')
+    checkHandle(io, data)
   })
 
   socket.on('createRoom', data => {

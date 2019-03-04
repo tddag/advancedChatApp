@@ -3,16 +3,17 @@ import './ChatWindow.styles.css'
 import { Container, Row, Col } from 'reactstrap'
 
 class ChatWindow extends Component {
-  state = {
-    roomName: '',
-    username: '',
-    message: '',
-    activeUser: [{ id: 1, name: 'John' }, { id: 2, name: 'Tony' }],
-    events: [
-      { id: 1, event: 'John joined this room' },
-      { id: 2, event: 'Tony joined this room' },
-    ],
-    messageLog: [],
+  constructor() {
+    super()
+    this.state = {
+      roomName: '',
+      userName: '',
+      message: '',
+      activeUser: [],
+      events: [],
+      messageLog: [],
+      error: '',
+    }
   }
 
   componentDidMount() {
@@ -25,9 +26,6 @@ class ChatWindow extends Component {
         messageLog: messageLog,
       })
     })
-    // this.setState({
-    //   roomName: this.props.match.params.name,
-    // })
   }
 
   getActiveUser = () => {
@@ -48,7 +46,7 @@ class ChatWindow extends Component {
 
   nameChange = e => {
     this.setState({
-      username: e.target.value,
+      userName: e.target.value,
     })
   }
 
@@ -66,10 +64,32 @@ class ChatWindow extends Component {
 
   handleSend = () => {
     let { socket } = this.props
+    let { activeUser } = this.state
+    let { events } = this.state
 
-    socket.emit('chat', {
-      user: this.state.username,
-      message: this.state.message,
+    socket.emit('checkHandle', {
+      user: this.state.userName,
+    })
+
+    socket.on('checkSuccess', data => {
+      socket.emit('chat', {
+        user: this.state.userName,
+        message: this.state.message,
+      })
+      activeUser.push(data.user)
+      events.push({
+        event: `${data.user.name} has joined`,
+      })
+      this.setState({
+        activeUser: activeUser,
+        events: events,
+      })
+    })
+
+    socket.on('checkFail', data => {
+      this.setState({
+        error: data.message,
+      })
     })
   }
 

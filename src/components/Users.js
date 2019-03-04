@@ -56,6 +56,7 @@ class Users extends Component {
     socket.on('registerFail', data => {
       this.setState({
         errors: data.message,
+        success: '',
       })
     })
     socket.on('registerSuccess', data => {
@@ -64,6 +65,7 @@ class Users extends Component {
       this.setState({
         users: users,
         success: data.message,
+        errors: '',
       })
     })
   }
