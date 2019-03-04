@@ -3,10 +3,26 @@ import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
 
 class Rooms extends Component {
-  state = {
-    roomName: '',
-    rooms: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      roomName: '',
+      rooms: [],
+      errors: '',
+      success: '',
+    }
   }
+
+  componentDidMount() {
+    fetch('http://localhost:4000/room/get/all')
+      .then(res => res.json())
+      .then(rooms => {
+        this.setState({
+          rooms: rooms,
+        })
+      })
+  }
+
   renderRooms = () => {
     return this.state.rooms.map((room, index) => {
       return (
@@ -22,38 +38,36 @@ class Rooms extends Component {
       )
     })
   }
+
   handleChange = e => {
     this.setState({
       roomName: e.target.value,
     })
   }
-  handleSubmit = () => {
-    let { rooms } = this.state
-    rooms.push({
-      name: this.state.roomName,
+
+  createRoom = () => {
+    let { socket } = this.props
+    let { roomName } = this.state
+
+    socket.emit('createRoom', {
+      name: roomName,
     })
-    this.setState({
-      rooms: rooms,
-    })
-    fetch('http://localhost:4000/room/create', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: this.state.roomName,
-      }),
-    })
-  }
-  componentDidMount() {
-    fetch('http://localhost:4000/room/get/all')
-      .then(res => res.json())
-      .then(rooms => {
-        this.setState({
-          rooms: rooms,
-        })
+
+    socket.on('createFail', data => {
+      this.setState({
+        errors: data.message,
+        success: '',
       })
+    })
+    socket.on('createSuccess', data => {
+      let { rooms } = this.state
+      rooms.push(data.newRoom)
+      this.setState({
+        rooms: rooms,
+        success: data.message,
+        errors: '',
+      })
+    })
   }
 
   render() {
@@ -76,7 +90,7 @@ class Rooms extends Component {
             value={this.state.roomName}
             onChange={this.handleChange}
           />
-          <button onClick={this.handleSubmit}>Create</button>
+          <button onClick={this.createRoom}>Create</button>
         </div>
       </div>
     )

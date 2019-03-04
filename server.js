@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const registerUser = require('./back_end/controllers/user')
-
+const createRoom = require('./back_end/controllers/room')
 // DB config
 const db = require('./back_end/config/keys').mongoURI
 
@@ -53,8 +53,11 @@ io.on('connection', socket => {
   })
 
   socket.on('registerUser', data => {
-    console.log(data)
     registerUser(io, data)
+  })
+
+  socket.on('createRoom', data => {
+    createRoom(io, data)
   })
 })
 
