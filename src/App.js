@@ -22,7 +22,10 @@ class App extends Component {
         <NavBar />
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route path="/rooms" component={Rooms} />
+          <Route
+            path="/rooms"
+            render={() => <Rooms socket={this.state.socket} />}
+          />
           <Route
             path="/users"
             render={() => <Users socket={this.state.socket} />}

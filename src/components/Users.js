@@ -9,38 +9,10 @@ class Users extends Component {
       userName: '',
       users: [],
       errors: '',
+      success: '',
     }
   }
 
-  handleChange = e => {
-    this.setState({
-      userName: e.target.value,
-    })
-  }
-
-  registerUser = () => {
-    let { socket } = this.props
-
-    socket.emit('registerUser', {
-      name: this.state.userName,
-    })
-
-    socket.on('registerFail', data => {
-      console.log(data)
-      this.setState({
-        errors: data.message,
-      })
-    })
-    socket.on('registerSuccess', data => {
-      let { users } = this.state
-      console.log(data)
-      users.push(data.newUser)
-      console.log(users)
-      this.setState({
-        users: users,
-      })
-    })
-  }
   componentDidMount() {
     fetch('http://localhost:4000/user/get/all')
       .then(res => res.json())
@@ -49,8 +21,6 @@ class Users extends Component {
           users: users,
         })
       })
-
-    let { socket } = this.props
   }
 
   renderUsers = () => {
@@ -68,6 +38,39 @@ class Users extends Component {
       )
     })
   }
+
+  handleChange = e => {
+    this.setState({
+      userName: e.target.value,
+    })
+  }
+
+  registerUser = () => {
+    let { socket } = this.props
+    let { userName } = this.state
+
+    socket.emit('registerUser', {
+      name: userName,
+    })
+
+    socket.on('registerFail', data => {
+      this.setState({
+        errors: data.message,
+        success: '',
+      })
+    })
+    socket.on('registerSuccess', data => {
+      let { users } = this.state
+      users.push(data.newUser)
+      console.log(users)
+      this.setState({
+        users: users,
+        success: data.message,
+        errors: '',
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -85,7 +88,7 @@ class Users extends Component {
           <input
             type="text"
             placeholder="Create user"
-            value={this.state.userName}
+            value={this.state.roomName}
             onChange={this.handleChange}
           />
           <button onClick={this.registerUser}>Register</button>
