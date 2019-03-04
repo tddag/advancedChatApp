@@ -81,14 +81,26 @@ class Users extends Component {
           </thead>
           <tbody>{this.renderUsers()}</tbody>
         </table>
-        <div class="users-container">
-          <input
-            type="text"
-            placeholder="Create user"
-            value={this.state.roomName}
-            onChange={this.handleChange}
-          />
-          <button onClick={this.registerUser}>Register</button>
+        <div class="container1">
+          <div class="users-container">
+            <input
+              type="text"
+              placeholder="Create user"
+              value={this.state.roomName}
+              onChange={this.handleChange}
+            />
+            <button onClick={this.registerUser}>Register</button>
+          </div>
+          {this.state.errors && (
+            <p class="error-container">
+              <small>{this.state.errors}</small>
+            </p>
+          )}
+          {this.state.success && (
+            <p class="success-container">
+              <small>{this.state.errors}</small>
+            </p>
+          )}
         </div>
       </div>
     )
