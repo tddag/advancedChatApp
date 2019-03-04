@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './ChatWindow.styles.css'
 import { Container, Row, Col } from 'reactstrap'
-import { socket } from './NavBar'
 
 class ChatWindow extends Component {
   state = {
@@ -17,6 +16,7 @@ class ChatWindow extends Component {
   }
 
   componentDidMount() {
+    let { socket } = this.props
     socket.on('chat', data => {
       let messageLog = this.state.messageLog
       messageLog.unshift(`${data.user}: ${data.message}`)
@@ -25,9 +25,9 @@ class ChatWindow extends Component {
         messageLog: messageLog,
       })
     })
-    this.setState({
-      roomName: this.props.match.params.name,
-    })
+    // this.setState({
+    //   roomName: this.props.match.params.name,
+    // })
   }
 
   getActiveUser = () => {
@@ -65,6 +65,8 @@ class ChatWindow extends Component {
   }
 
   handleSend = () => {
+    let { socket } = this.props
+
     socket.emit('chat', {
       user: this.state.username,
       message: this.state.message,

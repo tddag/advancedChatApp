@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Users.styles.css'
+
 class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
       userName: '',
       users: [],
+      errors: '',
     }
   }
 
@@ -15,23 +17,28 @@ class Users extends Component {
       userName: e.target.value,
     })
   }
-  handleSubmit = () => {
-    let { users } = this.state
-    users.push({
+
+  registerUser = () => {
+    let { socket } = this.props
+
+    socket.emit('registerUser', {
       name: this.state.userName,
     })
-    this.setState({
-      users: users,
+
+    socket.on('registerFail', data => {
+      console.log(data)
+      this.setState({
+        errors: data.message,
+      })
     })
-    fetch('http://localhost:4000/user/create', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: this.state.userName,
-      }),
+    socket.on('registerSuccess', data => {
+      let { users } = this.state
+      console.log(data)
+      users.push(data.newUser)
+      console.log(users)
+      this.setState({
+        users: users,
+      })
     })
   }
   componentDidMount() {
@@ -42,7 +49,10 @@ class Users extends Component {
           users: users,
         })
       })
+
+    let { socket } = this.props
   }
+
   renderUsers = () => {
     return this.state.users.map((user, index) => {
       return (
@@ -78,7 +88,7 @@ class Users extends Component {
             value={this.state.userName}
             onChange={this.handleChange}
           />
-          <button onClick={this.handleSubmit}>Create</button>
+          <button onClick={this.registerUser}>Register</button>
         </div>
       </div>
     )

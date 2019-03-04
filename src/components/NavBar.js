@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import socketIOClient from 'socket.io-client'
 
-var socket
 class NavBar extends Component {
-  constructor() {
-    super()
-    this.state = {
-      endpoint: 'http://localhost:4000',
-    }
-    socket = socketIOClient(this.state.endpoint)
-  }
-
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,4 +38,4 @@ class NavBar extends Component {
   }
 }
 
-export { NavBar, socket }
+export default NavBar

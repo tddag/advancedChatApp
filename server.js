@@ -6,6 +6,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+const registerUser = require('./back_end/controllers/user')
+
 // DB config
 const db = require('./back_end/config/keys').mongoURI
 
@@ -39,14 +41,27 @@ const server = http.createServer(app)
 const io = socketIO(server)
 
 io.on('connection', socket => {
-  console.log('made socket connection', socket.id)
+  console.log('user connect', socket.id)
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
 
   socket.on('chat', data => {
     console.log('chat')
     io.sockets.emit('chat', data)
   })
+
+  socket.on('registerUser', data => {
+    console.log(data)
+    registerUser(io, data)
+  })
 })
 
+// app.use((req,res,next) => {
+//   req.socketIO = io;
+//   next();
+// })
 // Use route
 // app.use('/api/history', history)
 // app.use('/api/room_history', room_history)
@@ -71,3 +86,5 @@ const port = process.env.PORT || 4000
 server.listen(port, () => {
   console.log(`Server started on port ${port}`)
 })
+
+module.exports = io
