@@ -9,15 +9,16 @@ const registerUser = (io, data) => {
   } else {
     User.findOne({ name: data.name }).then(user => {
       if (user) {
-        io.sockets.emit('registerFail', {
+        io.emit('registerFail', {
           message: 'User is already existed',
+          user: user,
         })
       } else {
         const newUser = new User({
           name: data.name,
         })
         newUser.save()
-        io.sockets.emit('registerSuccess', {
+        io.emit('registerSuccess', {
           message: 'Register successfully',
           newUser: newUser,
         })

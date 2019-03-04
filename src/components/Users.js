@@ -56,17 +56,14 @@ class Users extends Component {
     socket.on('registerFail', data => {
       this.setState({
         errors: data.message,
-        success: '',
       })
     })
     socket.on('registerSuccess', data => {
       let { users } = this.state
       users.push(data.newUser)
-      console.log(users)
       this.setState({
         users: users,
         success: data.message,
-        errors: '',
       })
     })
   }
