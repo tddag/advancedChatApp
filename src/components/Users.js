@@ -41,11 +41,6 @@ class Users extends Component {
         <tr key={index}>
           <th scope="row">{index + 1}</th>
           <td>{user.name}</td>
-          <td>
-            <Link to={`/chat/${user.name}`}>
-              <button>Chat</button>
-            </Link>
-          </td>
         </tr>
       )
     })
@@ -81,7 +76,6 @@ class Users extends Component {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Users</th>
-              <th />
             </tr>
           </thead>
           <tbody>{this.renderUsers()}</tbody>
