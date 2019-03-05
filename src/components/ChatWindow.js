@@ -9,7 +9,7 @@ class ChatWindow extends Component {
       roomName: '',
       userName: '',
       message: '',
-      activeUser: [],
+      activeUsers: [],
       events: [],
       messageLog: [],
       error: '',
@@ -18,18 +18,39 @@ class ChatWindow extends Component {
 
   componentDidMount() {
     let { socket } = this.props
+    let { activeUsers, events, messageLog } = this.state
+
     socket.on('chat', data => {
-      let messageLog = this.state.messageLog
-      messageLog.unshift(`${data.user}: ${data.message}`)
-      console.log(messageLog)
+      console.log(data)
+      messageLog.push(`${data.user}: ${data.message}`)
       this.setState({
         messageLog: messageLog,
       })
     })
+
+    socket.on('checkSuccess', data => {
+      socket.emit('chat', {
+        user: this.state.userName,
+        message: this.state.message,
+      })
+      let check = activeUsers.filter(user => {
+        return user.name == data.user.name
+      })
+      if (check.length == 0) {
+        activeUsers.push(data.user)
+        events.push({
+          event: `${data.user.name} has joined`,
+        })
+        this.setState({
+          activeUsers: activeUsers,
+          events: events,
+        })
+      }
+    })
   }
 
-  getActiveUser = () => {
-    return this.state.activeUser.map((user, index) => {
+  getActiveUsers = () => {
+    return this.state.activeUsers.map((user, index) => {
       return (
         <p key={index}>
           <span className="dot dot-success" /> {user.name}
@@ -64,26 +85,9 @@ class ChatWindow extends Component {
 
   handleSend = () => {
     let { socket } = this.props
-    let { activeUser } = this.state
-    let { events } = this.state
 
     socket.emit('checkHandle', {
       user: this.state.userName,
-    })
-
-    socket.on('checkSuccess', data => {
-      socket.emit('chat', {
-        user: this.state.userName,
-        message: this.state.message,
-      })
-      activeUser.push(data.user)
-      events.push({
-        event: `${data.user.name} has joined`,
-      })
-      this.setState({
-        activeUser: activeUser,
-        events: events,
-      })
     })
 
     socket.on('checkFail', data => {
@@ -103,7 +107,7 @@ class ChatWindow extends Component {
               <div className="window-head">
                 <h2>Active User</h2>
               </div>
-              <div className="list">{this.getActiveUser()}</div>
+              <div className="list">{this.getActiveUsers()}</div>
             </div>
           </Col>
           <Col>

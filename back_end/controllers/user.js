@@ -17,10 +17,11 @@ const registerUser = (io, data) => {
         const newUser = new User({
           name: data.name,
         })
-        newUser.save()
-        io.emit('registerSuccess', {
-          message: 'Register successfully',
-          newUser: newUser,
+        newUser.save().then(() => {
+          io.emit('registerSuccess', {
+            message: 'Register successfully',
+            newUser: newUser,
+          })
         })
       }
     })

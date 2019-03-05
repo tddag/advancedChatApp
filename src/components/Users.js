@@ -21,6 +21,18 @@ class Users extends Component {
           users: users,
         })
       })
+
+    let { socket } = this.props
+
+    socket.on('registerSuccess', data => {
+      let { users } = this.state
+      users.push(data.newUser)
+      this.setState({
+        users: users,
+        success: data.message,
+        errors: '',
+      })
+    })
   }
 
   renderUsers = () => {
@@ -57,15 +69,6 @@ class Users extends Component {
       this.setState({
         errors: data.message,
         success: '',
-      })
-    })
-    socket.on('registerSuccess', data => {
-      let { users } = this.state
-      users.push(data.newUser)
-      this.setState({
-        users: users,
-        success: data.message,
-        errors: '',
       })
     })
   }

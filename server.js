@@ -49,7 +49,6 @@ io.on('connection', socket => {
   })
 
   socket.on('chat', data => {
-    console.log('chat')
     io.emit('chat', data)
   })
 

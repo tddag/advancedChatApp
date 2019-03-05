@@ -21,6 +21,17 @@ class Rooms extends Component {
           rooms: rooms,
         })
       })
+    let { socket } = this.props
+
+    socket.on('createSuccess', data => {
+      let { rooms } = this.state
+      rooms.push(data.newRoom)
+      this.setState({
+        rooms: rooms,
+        success: data.message,
+        errors: '',
+      })
+    })
   }
 
   renderRooms = () => {
@@ -59,15 +70,6 @@ class Rooms extends Component {
         success: '',
       })
     })
-    socket.on('createSuccess', data => {
-      let { rooms } = this.state
-      rooms.push(data.newRoom)
-      this.setState({
-        rooms: rooms,
-        success: data.message,
-        errors: '',
-      })
-    })
   }
 
   render() {
@@ -83,14 +85,26 @@ class Rooms extends Component {
           </thead>
           <tbody>{this.renderRooms()}</tbody>
         </table>
-        <div className="rooms-container">
-          <input
-            type="text"
-            placeholder="Create room"
-            value={this.state.roomName}
-            onChange={this.handleChange}
-          />
-          <button onClick={this.createRoom}>Create</button>
+        <div className="container1">
+          <div className="rooms-container">
+            <input
+              type="text"
+              placeholder="Create room"
+              value={this.state.roomName}
+              onChange={this.handleChange}
+            />
+            <button onClick={this.createRoom}>Create</button>
+          </div>
+          {this.state.errors && (
+            <p class="error-container">
+              <small>{this.state.errors}</small>
+            </p>
+          )}
+          {this.state.success && (
+            <p class="success-container">
+              <small>{this.state.errors}</small>
+            </p>
+          )}
         </div>
       </div>
     )
