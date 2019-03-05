@@ -17,36 +17,43 @@ class ChatWindow extends Component {
   }
 
   componentDidMount() {
+    let roomName = this.props.match.params.name
+    this.setState({
+      roomName: roomName,
+    })
     let { socket } = this.props
     let { activeUsers, events, messageLog } = this.state
 
     socket.on('chat', data => {
+      console.log('get response')
       console.log(data)
+      let messageLog = this.state.messageLog
       messageLog.push(`${data.user}: ${data.message}`)
       this.setState({
         messageLog: messageLog,
       })
     })
 
-    socket.on('checkSuccess', data => {
-      socket.emit('chat', {
-        user: this.state.userName,
-        message: this.state.message,
-      })
-      let check = activeUsers.filter(user => {
-        return user.name == data.user.name
-      })
-      if (check.length == 0) {
-        activeUsers.push(data.user)
-        events.push({
-          event: `${data.user.name} has joined`,
-        })
-        this.setState({
-          activeUsers: activeUsers,
-          events: events,
-        })
-      }
-    })
+    // Tam - not gonna check for now
+    //   socket.on('checkSuccess', data => {
+    //     socket.emit('chat', {
+    //       user: this.state.userName,
+    //       message: this.state.message,
+    //     })
+    //     let check = activeUsers.filter(user => {
+    //       return user.name == data.user.name
+    //     })
+    //     if (check.length == 0) {
+    //       activeUsers.push(data.user)
+    //       events.push({
+    //         event: `${data.user.name} has joined`,
+    //       })
+    //       this.setState({
+    //         activeUsers: activeUsers,
+    //         events: events,
+    //       })
+    //     }
+    //   })
   }
 
   getActiveUsers = () => {
@@ -83,18 +90,23 @@ class ChatWindow extends Component {
     })
   }
 
-  handleSend = () => {
+  handleSend = roomName => {
     let { socket } = this.props
-
-    socket.emit('checkHandle', {
+    socket.emit('chat', {
+      room: roomName,
       user: this.state.userName,
+      message: this.state.message,
     })
+    // Tam - not gonna check for now
+    // socket.emit('checkHandle', {
+    //   user: this.state.userName,
+    // })
 
-    socket.on('checkFail', data => {
-      this.setState({
-        error: data.message,
-      })
-    })
+    // socket.on('checkFail', data => {
+    //   this.setState({
+    //     error: data.message,
+    //   })
+    // })
   }
 
   render() {
@@ -128,7 +140,10 @@ class ChatWindow extends Component {
                 placeholder="Message"
                 onChange={this.messageChange}
               />
-              <button id="send" onClick={this.handleSend}>
+              <button
+                id="send"
+                onClick={() => this.handleSend(this.state.roomName)}
+              >
                 Send
               </button>
             </div>

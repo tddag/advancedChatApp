@@ -32,7 +32,9 @@ class App extends Component {
           />
           <Route
             path="/chat/:name"
-            render={() => <ChatWindow socket={this.state.socket} />}
+            render={props => (
+              <ChatWindow {...props} socket={this.state.socket} />
+            )}
           />
         </Switch>
       </div>

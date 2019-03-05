@@ -49,20 +49,29 @@ io.on('connection', socket => {
   })
 
   socket.on('chat', data => {
-    io.emit('chat', data)
+    console.log('test chat')
+    let roomName = data.room
+    console.log(roomName)
+    io.to(roomName).emit('chat', data)
   })
 
   socket.on('registerUser', data => {
     registerUser(io, data)
   })
 
-  socket.on('checkHandle', data => {
-    console.log('check handle')
-    checkHandle(io, data)
-  })
+  // Tam - not gonna check for now
+  // socket.on('checkHandle', data => {
+  //   console.log('check handle')
+  //   checkHandle(io, data)
+  // })
 
   socket.on('createRoom', data => {
     createRoom(io, data)
+  })
+
+  socket.on('joinRoom', roomName => {
+    console.log('joinTest backend', roomName)
+    socket.join(roomName)
   })
 })
 

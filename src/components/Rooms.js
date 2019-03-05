@@ -34,6 +34,12 @@ class Rooms extends Component {
     })
   }
 
+  handleJoin = roomName => {
+    let { socket } = this.props
+    console.log(roomName)
+    socket.emit('joinRoom', roomName)
+  }
+
   renderRooms = () => {
     return this.state.rooms.map((room, index) => {
       return (
@@ -42,7 +48,7 @@ class Rooms extends Component {
           <td>{room.name}</td>
           <td>
             <Link to={`/chat/${room.name}`}>
-              <button>Join</button>
+              <button onClick={() => this.handleJoin(room.name)}>Join</button>
             </Link>
           </td>
         </tr>
