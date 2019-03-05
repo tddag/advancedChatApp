@@ -7,7 +7,23 @@
 
 .rooms-container {
   float: right;
-  margin-right: 30%;
   display: inline-flex;
   border: 1px solid #ddd;
+}
+
+.container1 {
+  float: right;
+  margin-right: 30%;
+  display: block;
+  border: 1px solid #ddd;
+}
+
+.error-container {
+  text-align: center;
+  color: red;
+}
+
+.success-container {
+  text-align: center;
+  color: green;
 }

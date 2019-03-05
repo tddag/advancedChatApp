@@ -21,6 +21,18 @@ class Users extends Component {
           users: users,
         })
       })
+
+    let { socket } = this.props
+
+    socket.on('registerSuccess', data => {
+      let { users } = this.state
+      users.push(data.newUser)
+      this.setState({
+        users: users,
+        success: data.message,
+        errors: '',
+      })
+    })
   }
 
   renderUsers = () => {
@@ -29,11 +41,6 @@ class Users extends Component {
         <tr key={index}>
           <th scope="row">{index + 1}</th>
           <td>{user.name}</td>
-          <td>
-            <Link to={`/chat/${user.name}`}>
-              <button>Chat</button>
-            </Link>
-          </td>
         </tr>
       )
     })
@@ -56,14 +63,7 @@ class Users extends Component {
     socket.on('registerFail', data => {
       this.setState({
         errors: data.message,
-      })
-    })
-    socket.on('registerSuccess', data => {
-      let { users } = this.state
-      users.push(data.newUser)
-      this.setState({
-        users: users,
-        success: data.message,
+        success: '',
       })
     })
   }
@@ -76,7 +76,6 @@ class Users extends Component {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Users</th>
-              <th />
             </tr>
           </thead>
           <tbody>{this.renderUsers()}</tbody>
