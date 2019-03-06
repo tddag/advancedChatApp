@@ -136,6 +136,9 @@ class Rooms extends Component {
             <DropdownToggle caret>Choose a User</DropdownToggle>
             <DropdownMenu>{this.renderUsers()}</DropdownMenu>
           </ButtonDropdown>
+          <br />
+          <br />
+          You are logged in as <strong>{this.state.username}</strong>
         </div>
 
         <table className="table rooms-table-container">

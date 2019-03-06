@@ -76,27 +76,6 @@ class ChatWindow extends Component {
         events: events,
       })
     })
-
-    // Tam - not gonna check for now
-    //   socket.on('checkSuccess', data => {
-    //     socket.emit('chat', {
-    //       user: this.state.userName,
-    //       message: this.state.message,
-    //     })
-    //     let check = activeUsers.filter(user => {
-    //       return user.name == data.user.name
-    //     })
-    //     if (check.length == 0) {
-    //       activeUsers.push(data.user)
-    //       events.push({
-    //         event: `${data.user.name} has joined`,
-    //       })
-    //       this.setState({
-    //         activeUsers: activeUsers,
-    //         events: events,
-    //       })
-    //     }
-    //   })
   }
 
   // Check if user is in this.state.activeUsers

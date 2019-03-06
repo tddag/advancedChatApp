@@ -27,10 +27,33 @@ const createRoom = (io, data) => {
 }
 
 const saveChat = (io, data) => {
-  Room.findOne({ name: data.room }).then(room => {
-    if (room) {
+  io.to(data.room).emit('chat', data)
+
+  Room.update(
+    { name: data.room },
+    {
+      $push: {
+        chatHistories: {
+          userName: data.user,
+          message: data.message,
+          timestamp: new Date(),
+        },
+      },
     }
-  })
+  )
+    .then(() => {
+      Room.findOne({ name: data.room }).then(room => {
+        io.sockets.emit('saveSuccess', {
+          message: 'Store successfully',
+          room: room,
+        })
+      })
+    })
+    .catch(() => {
+      io.sockets.emit('saveFail', {
+        message: 'No room exits',
+      })
+    })
 }
 
-module.exports = { createRoom: createRoom }
+module.exports = { createRoom: createRoom, saveChat: saveChat }

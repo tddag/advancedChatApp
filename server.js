@@ -6,7 +6,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const { registerUser, checkHandle } = require('./back_end/controllers/user')
+const { registerUser } = require('./back_end/controllers/user')
 const { createRoom, saveChat } = require('./back_end/controllers/room')
 const { saveSocket } = require('./back_end/controllers/socket')
 
@@ -45,32 +45,21 @@ const io = socketIO(server)
 io.on('connection', socket => {
   let time = new Date()
   saveSocket('CONNECT', time, socket.id, '', 'User connected')
-  console.log('user connect', socket.id)
 
   socket.on('disconnect', () => {
-    console.log('user disconnected')
     saveSocket('DISCONNECT', time, socket.id, '', 'User disconneced')
   })
 
   socket.on('chat', data => {
     saveSocket('CHAT', time, socket.id, '', `${data.user} sent a message`)
     saveChat(io, data)
-    console.log('test chat')
-    io.to(data.room).emit('chat', data)
   })
 
   socket.on('registerUser', data => {
     registerUser(io, data)
   })
 
-  // Tam - not gonna check for now
-  // socket.on('checkHandle', data => {
-  //   console.log('check handle')
-  //   checkHandle(io, data)
-  // })
-
   socket.on('createRoom', data => {
-    console.log(data)
     createRoom(io, data)
     saveSocket(
       'CREATE_ROOM',
@@ -82,7 +71,6 @@ io.on('connection', socket => {
   })
 
   socket.on('joinRoom', roomName => {
-    console.log('joinTest backend', roomName)
     socket.join(roomName)
     saveSocket('JOIN_ROOM', time, socket.id, '', `${roomName} room is created`)
   })
