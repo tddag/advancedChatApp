@@ -73,6 +73,11 @@ io.on('connection', socket => {
     console.log('joinTest backend', roomName)
     socket.join(roomName)
   })
+
+  // Send activeUser to other members in the group
+  socket.on('activeUser', data => {
+    socket.to(data.roomName).emit('activeUser', { name: data.userName })
+  })
 })
 
 // app.use((req,res,next) => {

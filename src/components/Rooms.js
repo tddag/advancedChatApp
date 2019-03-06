@@ -20,7 +20,7 @@ class Rooms extends Component {
       success: '',
       dropDownOpen: false,
       users: [],
-      username: '',
+      username: 'Anonymous',
     }
   }
 
