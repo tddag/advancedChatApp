@@ -31,7 +31,7 @@ class App extends Component {
             render={() => <Users socket={this.state.socket} />}
           />
           <Route
-            path="/chat/:name"
+            path="/chat/:name&:username"
             render={props => (
               <ChatWindow {...props} socket={this.state.socket} />
             )}

@@ -1,8 +1,14 @@
 .rooms-table-container {
-  margin-left: 30px;
+  margin-left: 100px;
   text-align: center;
   width: 30%;
   display: inline-table;
+}
+
+.dropdown-user {
+  margin-top: 30px;
+  margin-left: 200px;
+  margin-bottom: 150px;
 }
 
 .rooms-container {
@@ -13,7 +19,7 @@
 
 .container1 {
   float: right;
-  margin-right: 30%;
+  margin-right: 20%;
   display: block;
   border: 1px solid #ddd;
 }
