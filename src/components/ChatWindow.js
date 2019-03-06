@@ -34,7 +34,10 @@ class ChatWindow extends Component {
       console.log('get response')
       console.log(data)
       let messageLog = this.state.messageLog
-      messageLog.push(`${data.user}: ${data.message}`)
+      messageLog.push({
+        message: `${data.user}: ${data.message}`,
+        timeStamp: data.timeStamp,
+      })
       // Check if in activeUsers
       let activeUsers = this.state.activeUsers
       if (!this.isActiveUser(data.user)) {
@@ -151,16 +154,29 @@ class ChatWindow extends Component {
 
   getMessages = () => {
     return this.state.messageLog.map((message, index) => {
-      return <p key={index}> {message}</p>
+      return (
+        <div key={index}>
+          <span className="mw">{message.message} </span>
+          <div className="right-0">
+            <i> {message.timeStamp}</i>{' '}
+          </div>
+        </div>
+      )
     })
   }
 
   handleSend = roomName => {
     let { socket } = this.props
+    let d = new Date()
+    let date = d.toLocaleDateString()
+    let time = d.toLocaleTimeString()
+    let timeStamp = date + ' ' + time
+    // console.log(timeStamp);
     socket.emit('chat', {
       room: roomName,
       user: this.state.userName,
       message: this.state.message,
+      timeStamp: timeStamp,
     })
     // Tam - not gonna check for now
     // socket.emit('checkHandle', {
