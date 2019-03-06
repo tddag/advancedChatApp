@@ -52,14 +52,23 @@ class ChatWindow extends Component {
       roomName: roomName,
     })
 
-    socket.on('activeUser', data => {
-      let activeUser = this.state.activeUsers
+    // Listen to leftGroup event, then add to event list
+    socket.on('leftGroup', data => {
       let events = this.state.events
-      activeUsers.push({ name: data.name })
-      events.unshift({ event: `${data.name} has joined this group` })
+      events.unshift({ event: `${data.userName} has left the group` })
       this.setState({
-        roomName: roomName,
-        userName: userName,
+        events: events,
+      })
+      if (this.isActiveUser) this.removeActiveUser(data.userName)
+    })
+
+    // Listen to activeUser event when new user joins the group
+    socket.on('activeUser', data => {
+      // let activeUsers = this.state.activeUsers
+      let events = this.state.events
+      activeUsers.push({ name: data.userName })
+      events.unshift({ event: `${data.userName} has joined this group` })
+      this.setState({
         activeUsers: activeUsers,
         events: events,
       })
@@ -93,6 +102,17 @@ class ChatWindow extends Component {
       if (user.name === username) return true
     }
     return false
+  }
+
+  // Remove user from activeUsers list
+  removeActiveUser = username => {
+    let activeUsers = this.state.activeUsers
+    for (let i = 0; i < activeUsers.length; i++) {
+      if (activeUsers[i].name === username) activeUsers.splice(i, 1)
+    }
+    this.setState({
+      activeUsers: activeUsers,
+    })
   }
 
   getActiveUsers = () => {
@@ -154,12 +174,28 @@ class ChatWindow extends Component {
     // })
   }
 
+  // Announce other members in the group "user left the group"
+  handleLeaveGroup = () => {
+    let { socket } = this.props
+    socket.emit('leftGroup', {
+      roomName: this.state.roomName,
+      userName: this.state.userName,
+    })
+  }
+
   render() {
     return (
       <Container>
         <h1> Room {this.state.roomName}</h1>
         <Link to={`/rooms`}>
-          <Button color="secondary"> Leave Group </Button>
+          <Button
+            className="leaveBtn"
+            color="secondary"
+            onClick={this.handleLeaveGroup}
+          >
+            {' '}
+            Leave Group{' '}
+          </Button>
         </Link>
         <Row>
           <Col xs="3">

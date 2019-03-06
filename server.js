@@ -76,7 +76,13 @@ io.on('connection', socket => {
 
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
-    socket.to(data.roomName).emit('activeUser', { name: data.userName })
+    socket.to(data.roomName).emit('activeUser', { userName: data.userName })
+  })
+
+  // Announce other members in the group "user has left the group"
+  socket.on('leftGroup', data => {
+    socket.leave(data.roomName)
+    socket.to(data.roomName).emit('leftGroup', { userName: data.userName })
   })
 })
 
