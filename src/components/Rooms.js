@@ -20,7 +20,7 @@ class Rooms extends Component {
       success: '',
       dropDownOpen: false,
       users: [],
-      username: '',
+      username: 'Anonymous',
     }
   }
 
@@ -112,15 +112,19 @@ class Rooms extends Component {
   }
 
   renderUsers = () => {
-    return this.state.users.map(user => {
-      return <DropdownItem onClick={this.selectUser}>{user.name}</DropdownItem>
+    return this.state.users.map((user, index) => {
+      return (
+        <DropdownItem key={index} onClick={this.selectUser}>
+          {user.name}
+        </DropdownItem>
+      )
     })
   }
 
   render() {
     return (
       <div>
-        <div class="dropdown-user">
+        <div className="dropdown-user">
           <ButtonDropdown
             direction="right"
             isOpen={this.state.dropdownOpen}
@@ -131,8 +135,8 @@ class Rooms extends Component {
           </ButtonDropdown>
         </div>
 
-        <table class="table rooms-table-container">
-          <thead class="thead-dark">
+        <table className="table rooms-table-container">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Rooms</th>
@@ -152,12 +156,12 @@ class Rooms extends Component {
             <button onClick={this.createRoom}>Create</button>
           </div>
           {this.state.errors && (
-            <p class="error-container">
+            <p className="error-container">
               <small>{this.state.errors}</small>
             </p>
           )}
           {this.state.success && (
-            <p class="success-container">
+            <p className="success-container">
               <small>{this.state.errors}</small>
             </p>
           )}

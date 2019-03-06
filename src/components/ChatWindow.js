@@ -19,20 +19,45 @@ class ChatWindow extends Component {
   componentDidMount() {
     let roomName = this.props.match.params.name
     let userName = this.props.match.params.username
+    let activeUsers = this.state.activeUsers
+    activeUsers.push({ name: userName })
     this.setState({
       roomName: roomName,
       userName: userName,
+      activeUsers: activeUsers,
     })
     let { socket } = this.props
-    let { activeUsers, events, messageLog } = this.state
+    let { events, messageLog } = this.state
 
     socket.on('chat', data => {
       console.log('get response')
       console.log(data)
       let messageLog = this.state.messageLog
       messageLog.push(`${data.user}: ${data.message}`)
+      // Check if in activeUsers
+      let activeUsers = this.state.activeUsers
+      if (!this.isActiveUser(data.user)) {
+        activeUsers.push({ name: data.user })
+      }
       this.setState({
         messageLog: messageLog,
+        activeUsers: activeUsers,
+      })
+    })
+
+    // Send activeUser to other members in the group
+    socket.emit('activeUser', {
+      userName: userName,
+      roomName: roomName,
+    })
+
+    socket.on('activeUser', data => {
+      let activeUser = this.state.activeUsers
+      activeUsers.push({ name: data.name })
+      this.setState({
+        roomName: roomName,
+        userName: userName,
+        activeUsers: activeUsers,
       })
     })
 
@@ -56,6 +81,14 @@ class ChatWindow extends Component {
     //       })
     //     }
     //   })
+  }
+
+  // Check if user is in this.state.activeUsers
+  isActiveUser = username => {
+    for (let user of this.state.activeUsers) {
+      if (user.name === username) return true
+    }
+    return false
   }
 
   getActiveUsers = () => {
@@ -88,8 +121,8 @@ class ChatWindow extends Component {
   }
 
   getMessages = () => {
-    return this.state.messageLog.map(message => {
-      return <p> {message}</p>
+    return this.state.messageLog.map((message, index) => {
+      return <p key={index}> {message}</p>
     })
   }
 

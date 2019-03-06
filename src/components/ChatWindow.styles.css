@@ -42,7 +42,7 @@ h2 {
 }
 
 .list {
-  max-width: 200px;
+  max-width: 150px;
   margin: 20px auto;
   overflow: auto;
 }
