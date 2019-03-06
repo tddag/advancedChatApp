@@ -53,11 +53,14 @@ class ChatWindow extends Component {
 
     socket.on('activeUser', data => {
       let activeUser = this.state.activeUsers
+      let events = this.state.events
       activeUsers.push({ name: data.name })
+      events.unshift({ event: `${data.name} has joined this group` })
       this.setState({
         roomName: roomName,
         userName: userName,
         activeUsers: activeUsers,
+        events: events,
       })
     })
 
@@ -103,7 +106,12 @@ class ChatWindow extends Component {
 
   getEvents = () => {
     return this.state.events.map((event, index) => {
-      return <p key={index}>{event.event}</p>
+      return (
+        <p key={index}>
+          {' '}
+          <i>{event.event} </i>
+        </p>
+      )
     })
   }
 
