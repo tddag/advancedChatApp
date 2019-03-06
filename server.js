@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { registerUser, checkHandle } = require('./back_end/controllers/user')
-const { createRoom } = require('./back_end/controllers/room')
+const { createRoom, saveChat } = require('./back_end/controllers/room')
 const { saveSocket } = require('./back_end/controllers/socket')
 
 // DB config
@@ -53,11 +53,10 @@ io.on('connection', socket => {
   })
 
   socket.on('chat', data => {
-    console.log('test chat')
-    let roomName = data.room
-    console.log(data)
-    io.to(roomName).emit('chat', data)
     saveSocket('CHAT', time, socket.id, '', `${data.user} sent a message`)
+    saveChat(io, data)
+    console.log('test chat')
+    io.to(data.room).emit('chat', data)
   })
 
   socket.on('registerUser', data => {
@@ -102,10 +101,6 @@ io.on('connection', socket => {
   })
 })
 
-// app.use((req,res,next) => {
-//   req.socketIO = io;
-//   next();
-// })
 // Use route
 // app.use('/api/history', history)
 // app.use('/api/room_history', room_history)

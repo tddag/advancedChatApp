@@ -6,6 +6,9 @@ const RoomSchema = new Schema({
     type: String,
     required: true,
   },
+  chatHistories: {
+    type: Array,
+  },
 })
 
 module.exports = Room = mongoose.model('rooms', RoomSchema)

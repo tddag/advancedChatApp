@@ -1,4 +1,5 @@
 const Room = require('../models/Room')
+const Socket = require('../models/Socket')
 
 const createRoom = (io, data) => {
   if (data.name == '') {
@@ -23,6 +24,13 @@ const createRoom = (io, data) => {
       }
     })
   }
+}
+
+const saveChat = (io, data) => {
+  Room.findOne({ name: data.room }).then(room => {
+    if (room) {
+    }
+  })
 }
 
 module.exports = { createRoom: createRoom }
