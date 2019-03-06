@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap'
 
 class Rooms extends Component {
   constructor(props) {
     super(props)
+
+    this.toggle = this.toggle.bind(this)
     this.state = {
       roomName: '',
       rooms: [],
       errors: '',
       success: '',
+      dropDownOpen: false,
+      users: [],
+      username: '',
     }
   }
 
@@ -22,6 +33,15 @@ class Rooms extends Component {
         })
       })
     let { socket } = this.props
+
+    // get all the users
+    fetch('http://localhost:4000/user/get/all')
+      .then(res => res.json())
+      .then(users => {
+        this.setState({
+          users: users,
+        })
+      })
 
     socket.on('createSuccess', data => {
       let { rooms } = this.state
@@ -47,7 +67,7 @@ class Rooms extends Component {
           <th scope="row">{index + 1}</th>
           <td>{room.name}</td>
           <td>
-            <Link to={`/chat/${room.name}`}>
+            <Link to={`/chat/${room.name}&${this.state.username}`}>
               <button onClick={() => this.handleJoin(room.name)}>Join</button>
             </Link>
           </td>
@@ -78,9 +98,39 @@ class Rooms extends Component {
     })
   }
 
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+    })
+  }
+
+  selectUser = e => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+      username: e.target.innerText,
+    })
+  }
+
+  renderUsers = () => {
+    return this.state.users.map(user => {
+      return <DropdownItem onClick={this.selectUser}>{user.name}</DropdownItem>
+    })
+  }
+
   render() {
     return (
       <div>
+        <div class="dropdown-user">
+          <ButtonDropdown
+            direction="right"
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggle}
+          >
+            <DropdownToggle caret>Choose a User</DropdownToggle>
+            <DropdownMenu>{this.renderUsers()}</DropdownMenu>
+          </ButtonDropdown>
+        </div>
+
         <table class="table rooms-table-container">
           <thead class="thead-dark">
             <tr>

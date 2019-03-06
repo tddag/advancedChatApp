@@ -18,8 +18,10 @@ class ChatWindow extends Component {
 
   componentDidMount() {
     let roomName = this.props.match.params.name
+    let userName = this.props.match.params.username
     this.setState({
       roomName: roomName,
+      userName: userName,
     })
     let { socket } = this.props
     let { activeUsers, events, messageLog } = this.state
@@ -72,11 +74,12 @@ class ChatWindow extends Component {
     })
   }
 
-  nameChange = e => {
-    this.setState({
-      userName: e.target.value,
-    })
-  }
+  // Tam - Username is set by default
+  // nameChange = e => {
+  //   this.setState({
+  //     userName: e.target.value,
+  //   })
+  // }
 
   messageChange = e => {
     this.setState({
@@ -132,7 +135,9 @@ class ChatWindow extends Component {
                 id="handle"
                 type="text"
                 placeholder="Handle"
-                onChange={this.nameChange}
+                //onChange={this.nameChange}
+                value={`Username: ${this.state.userName}`}
+                disabled
               />
               <input
                 id="message"
