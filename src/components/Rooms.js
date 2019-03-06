@@ -137,6 +137,12 @@ class Rooms extends Component {
             <DropdownMenu>{this.renderUsers()}</DropdownMenu>
           </ButtonDropdown>
         </div>
+        <div className="ml-100">
+          <h2>
+            {' '}
+            You will be joining a room as <b> {this.state.username}</b>
+          </h2>
+        </div>
 
         <table className="table rooms-table-container">
           <thead className="thead-dark">
