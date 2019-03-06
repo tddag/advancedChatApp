@@ -25,4 +25,4 @@ const createRoom = (io, data) => {
   }
 }
 
-module.exports = createRoom
+module.exports = { createRoom: createRoom }
