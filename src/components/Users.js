@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Users.styles.css'
+import { Button } from 'reactstrap'
 
 class Users extends Component {
   constructor(props) {
@@ -88,7 +89,9 @@ class Users extends Component {
               value={this.state.roomName}
               onChange={this.handleChange}
             />
-            <button onClick={this.registerUser}>Register</button>
+            <Button color="info" onClick={this.registerUser}>
+              Register
+            </Button>
           </div>
           {this.state.errors && (
             <p class="error-container">

@@ -33,3 +33,7 @@
   text-align: center;
   color: green;
 }
+
+button {
+  width: 100%;
+}

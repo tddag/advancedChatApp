@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
 import {
+  Button,
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -68,7 +69,9 @@ class Rooms extends Component {
           <td>{room.name}</td>
           <td>
             <Link to={`/chat/${room.name}&${this.state.username}`}>
-              <button onClick={() => this.handleJoin(room.name)}>Join</button>
+              <Button color="info" onClick={() => this.handleJoin(room.name)}>
+                Join
+              </Button>
             </Link>
           </td>
         </tr>
@@ -153,7 +156,9 @@ class Rooms extends Component {
               value={this.state.roomName}
               onChange={this.handleChange}
             />
-            <button onClick={this.createRoom}>Create</button>
+            <Button color="info" onClick={this.createRoom}>
+              Create
+            </Button>
           </div>
           {this.state.errors && (
             <p className="error-container">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './ChatWindow.styles.css'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, Button } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 class ChatWindow extends Component {
   constructor() {
@@ -157,6 +158,9 @@ class ChatWindow extends Component {
     return (
       <Container>
         <h1> Room {this.state.roomName}</h1>
+        <Link to={`/rooms`}>
+          <Button color="secondary"> Leave Group </Button>
+        </Link>
         <Row>
           <Col xs="3">
             <div className="window">
