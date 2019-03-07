@@ -43,7 +43,7 @@ h2 {
 
 .list {
   max-width: 200px;
-  margin: 20px auto;
+  margin: 20px 10px;
   overflow: auto;
 }
 
@@ -118,5 +118,10 @@ input {
 
 .mw {
   min-width: 60%;
+  display: inline-block;
+}
+
+.mw-50 {
+  /* min-width: 40%; */
   display: inline-block;
 }

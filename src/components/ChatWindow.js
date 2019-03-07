@@ -47,10 +47,12 @@ class ChatWindow extends Component {
           if (event.type === 'JOIN_ROOM') {
             events.unshift({
               event: `${event.username} has joined this group`,
+              timeStamp: event.timeStamp,
             })
           } else if (event.type === 'LEAVE_ROOM') {
             events.unshift({
               event: `${event.username} has left this group`,
+              timeStamp: event.timeStamp,
             })
           }
         })
@@ -158,10 +160,12 @@ class ChatWindow extends Component {
   getEvents = () => {
     return this.state.events.map((event, index) => {
       return (
-        <p key={index}>
-          {' '}
-          <i>{event.event} </i>
-        </p>
+        <div key={index}>
+          <span className="mw-50">{event.event} on </span>
+          <div className="right-0">
+            <i> {event.timeStamp}</i>{' '}
+          </div>
+        </div>
       )
     })
   }

@@ -74,7 +74,6 @@ const saveEvent = (eventType, data) => {
     }
   ).then((err, room) => {
     if (err) console.log(err)
-    else console.log(room)
   })
 }
 
