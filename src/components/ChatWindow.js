@@ -28,12 +28,12 @@ class ChatWindow extends Component {
       activeUsers: activeUsers,
     })
     let { socket } = this.props
-    let { events, messageLog } = this.state
 
     // Get Chat History
     fetch(`http://localhost:4000/room/get/${roomName}`)
       .then(res => res.json())
       .then(room => {
+        // Get Message History
         let messageLog = []
         room.chatHistories.map(message => {
           messageLog.unshift({
@@ -41,9 +41,23 @@ class ChatWindow extends Component {
             timeStamp: message.timestamp,
           })
         })
+        // Get Event History
+        let events = []
+        room.eventHistories.map(event => {
+          if (event.type === 'JOIN_ROOM') {
+            events.unshift({
+              event: `${event.username} has joined this group`,
+            })
+          } else if (event.type === 'LEAVE_ROOM') {
+            events.unshift({
+              event: `${event.username} has left this group`,
+            })
+          }
+        })
         //console.log(messageLog);
         this.setState({
           messageLog: messageLog,
+          events: events,
         })
       })
 
