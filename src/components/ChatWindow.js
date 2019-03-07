@@ -95,6 +95,15 @@ class ChatWindow extends Component {
     })
   }
 
+  componentWillUnmount() {
+    // Announce other members in the group "user left the group"
+    let { socket } = this.props
+    socket.emit('leftGroup', {
+      roomName: this.state.roomName,
+      userName: this.state.userName,
+    })
+  }
+
   // Check if user is in this.state.activeUsers
   isActiveUser = username => {
     for (let user of this.state.activeUsers) {
@@ -188,27 +197,13 @@ class ChatWindow extends Component {
     // })
   }
 
-  // Announce other members in the group "user left the group"
-  handleLeaveGroup = () => {
-    let { socket } = this.props
-    socket.emit('leftGroup', {
-      roomName: this.state.roomName,
-      userName: this.state.userName,
-    })
-  }
-
   render() {
     return (
       <Container>
         <h1> Room {this.state.roomName}</h1>
         <Link to={`/rooms`}>
-          <Button
-            className="leaveBtn"
-            color="secondary"
-            onClick={this.handleLeaveGroup}
-          >
-            {' '}
-            Leave Group{' '}
+          <Button className="leaveBtn" color="secondary">
+            Leave Group
           </Button>
         </Link>
         <Row>
