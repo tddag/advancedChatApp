@@ -156,6 +156,8 @@ class ChatWindow extends Component {
       user: this.state.userName,
       message: this.state.message,
       timeStamp: timeStamp,
+      date: date,
+      time: time,
     })
     // Tam - not gonna check for now
     // socket.emit('checkHandle', {

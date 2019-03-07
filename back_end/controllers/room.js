@@ -36,7 +36,9 @@ const saveChat = (io, data) => {
         chatHistories: {
           userName: data.user,
           message: data.message,
-          timestamp: new Date(),
+          timestamp: data.timeStamp,
+          date: data.date,
+          time: data.time,
         },
       },
     }
