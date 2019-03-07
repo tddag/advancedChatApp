@@ -136,13 +136,9 @@ class Rooms extends Component {
             <DropdownToggle caret>Choose a User</DropdownToggle>
             <DropdownMenu>{this.renderUsers()}</DropdownMenu>
           </ButtonDropdown>
-          <br />
-          <br />
-          You are logged in as <strong>{this.state.username}</strong>
         </div>
         <div className="ml-100">
           <h2>
-            {' '}
             You will be joining a room as <b> {this.state.username}</b>
           </h2>
         </div>
