@@ -58,7 +58,10 @@ class Rooms extends Component {
   handleJoin = roomName => {
     let { socket } = this.props
     console.log(roomName)
-    socket.emit('joinRoom', { roomName: roomName })
+    socket.emit('joinRoom', {
+      roomName: roomName,
+      username: this.state.username,
+    })
   }
 
   renderRooms = () => {

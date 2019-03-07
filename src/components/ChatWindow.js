@@ -111,7 +111,10 @@ class ChatWindow extends Component {
       // let activeUsers = this.state.activeUsers
       let events = this.state.events
       activeUsers.push({ name: data.userName })
-      events.unshift({ event: `${data.userName} has joined this group` })
+      events.unshift({
+        event: `${data.userName} has joined this group`,
+        timeStamp: data.timeStamp,
+      })
       this.setState({
         activeUsers: activeUsers,
         events: events,
@@ -269,7 +272,7 @@ class ChatWindow extends Component {
               </button>
             </div>
           </Col>
-          <Col xs="3">
+          <Col xs="4">
             <div className="window">
               <div className="window-head">
                 <h2>Room History</h2>

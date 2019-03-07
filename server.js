@@ -47,11 +47,18 @@ const server = http.createServer(app)
 const io = socketIO(server)
 
 io.on('connection', socket => {
+  let currentRoomName = ''
+  let currentUserName = ''
   let time = new Date()
   saveSocket('CONNECT', time, socket.id, '', 'User connected')
 
   socket.on('disconnect', () => {
     saveSocket('DISCONNECT', time, socket.id, '', 'User disconneced')
+    if (currentRoomName !== '') {
+      io.to(currentRoomName).emit('leftGroup', {
+        userName: currentUserName,
+      })
+    }
   })
 
   socket.on('chat', data => {
@@ -76,6 +83,8 @@ io.on('connection', socket => {
 
   socket.on('joinRoom', data => {
     socket.join(data.roomName)
+    currentRoomName = data.roomName
+    currentUserName = data.username
     saveSocket(
       'JOIN_ROOM',
       time,
@@ -88,12 +97,15 @@ io.on('connection', socket => {
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
     saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
-    socket.to(data.roomName).emit('activeUser', { userName: data.userName })
+    socket.in(data.roomName).emit('activeUser', { userName: data.userName })
     saveEvent('JOIN_ROOM', data)
+    saveRoomSocket(socket.id, data)
   })
 
   // Announce other members in the group "user has left the group"
   socket.on('leftGroup', data => {
+    currentRoomName = ''
+    currentUserName = ''
     saveSocket('SAVE_LEFT_GROUP', time, socket.id, '', `save left groups`)
     socket.leave(data.roomName)
     socket.to(data.roomName).emit('leftGroup', { userName: data.userName })
