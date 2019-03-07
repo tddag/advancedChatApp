@@ -30,11 +30,28 @@ class ChatWindow extends Component {
     let { socket } = this.props
     let { events, messageLog } = this.state
 
+    // Get Chat History
+    fetch(`http://localhost:4000/room/get/${roomName}`)
+      .then(res => res.json())
+      .then(room => {
+        let messageLog = []
+        room.chatHistories.map(message => {
+          messageLog.unshift({
+            message: `${message.userName}: ${message.message}`,
+            timeStamp: message.timestamp,
+          })
+        })
+        //console.log(messageLog);
+        this.setState({
+          messageLog: messageLog,
+        })
+      })
+
     socket.on('chat', data => {
       console.log('get response')
       console.log(data)
       let messageLog = this.state.messageLog
-      messageLog.push({
+      messageLog.unshift({
         message: `${data.user}: ${data.message}`,
         timeStamp: data.timeStamp,
       })

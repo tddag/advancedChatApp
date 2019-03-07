@@ -11,4 +11,13 @@ router.get('/get/all', (req, res) => {
   })
 })
 
+router.get('/get/:room', (req, res) => {
+  const room = req.params.room.replace('%20', ' ')
+  Room.findOne({ name: room }, (err, room) => {
+    if (room) {
+      res.status(200).json(room)
+    }
+  })
+})
+
 module.exports = router
