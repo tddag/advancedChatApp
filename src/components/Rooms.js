@@ -57,10 +57,17 @@ class Rooms extends Component {
 
   handleJoin = roomName => {
     let { socket } = this.props
+    let d = new Date()
+    let date = d.toLocaleDateString()
+    let time = d.toLocaleTimeString()
+    let timeStamp = date + ' ' + time
     console.log(roomName)
     socket.emit('joinRoom', {
       roomName: roomName,
-      username: this.state.username,
+      userName: this.state.username,
+      date: date,
+      time: time,
+      timeStamp: timeStamp,
     })
   }
 

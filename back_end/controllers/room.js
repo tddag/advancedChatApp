@@ -72,9 +72,7 @@ const saveEvent = (eventType, data) => {
         },
       },
     }
-  ).then((err, room) => {
-    if (err) console.log(err)
-  })
+  ).then()
 }
 
 module.exports = {

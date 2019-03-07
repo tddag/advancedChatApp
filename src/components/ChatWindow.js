@@ -21,11 +21,9 @@ class ChatWindow extends Component {
     let roomName = this.props.match.params.name.replace('%20', ' ')
     let userName = this.props.match.params.username
     let activeUsers = this.state.activeUsers
-    activeUsers.push({ name: userName })
     this.setState({
       roomName: roomName,
       userName: userName,
-      activeUsers: activeUsers,
     })
     let { socket } = this.props
 
@@ -64,8 +62,6 @@ class ChatWindow extends Component {
       })
 
     socket.on('chat', data => {
-      console.log('get response')
-      console.log(data)
       let messageLog = this.state.messageLog
       messageLog.unshift({
         message: `${data.user}: ${data.message}`,
@@ -91,7 +87,7 @@ class ChatWindow extends Component {
     socket.emit('activeUser', {
       userName: userName,
       roomName: roomName,
-      data: date,
+      date: date,
       time: time,
       timeStamp: timeStamp,
     })
@@ -99,7 +95,10 @@ class ChatWindow extends Component {
     // Listen to leftGroup event, then add to event list
     socket.on('leftGroup', data => {
       let events = this.state.events
-      events.unshift({ event: `${data.userName} has left the group` })
+      events.unshift({
+        event: `${data.userName} has left this room`,
+        timeStamp: data.timeStamp,
+      })
       this.setState({
         events: events,
       })
@@ -125,9 +124,16 @@ class ChatWindow extends Component {
   componentWillUnmount() {
     // Announce other members in the group "user left the group"
     let { socket } = this.props
+    let d = new Date()
+    let date = d.toLocaleDateString()
+    let time = d.toLocaleTimeString()
+    let timeStamp = date + ' ' + time
     socket.emit('leftGroup', {
       roomName: this.state.roomName,
       userName: this.state.userName,
+      data: date,
+      time: time,
+      timeStamp: timeStamp,
     })
   }
 

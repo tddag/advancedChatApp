@@ -58,6 +58,17 @@ io.on('connection', socket => {
       io.to(currentRoomName).emit('leftGroup', {
         userName: currentUserName,
       })
+      let d = new Date()
+      let date = d.toLocaleDateString()
+      let time = d.toLocaleTimeString()
+      let timeStamp = date + ' ' + time
+      saveEvent('LEAVE_ROOM', {
+        userName: currentUserName,
+        roomName: currentRoomName,
+        data: date,
+        time: time,
+        timeStamp: timeStamp,
+      })
     }
   })
 
@@ -92,14 +103,13 @@ io.on('connection', socket => {
       '',
       `${data.roomName} room is created`
     )
+    saveEvent('JOIN_ROOM', data)
   })
 
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
     saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
-    socket.in(data.roomName).emit('activeUser', { userName: data.userName })
-    saveEvent('JOIN_ROOM', data)
-    saveRoomSocket(socket.id, data)
+    io.in(data.roomName).emit('activeUser', data)
   })
 
   // Announce other members in the group "user has left the group"
@@ -107,8 +117,13 @@ io.on('connection', socket => {
     currentRoomName = ''
     currentUserName = ''
     saveSocket('SAVE_LEFT_GROUP', time, socket.id, '', `save left groups`)
+    let d = new Date()
+    let date = d.toLocaleDateString()
+    let time1 = d.toLocaleTimeString()
+    let timeStamp = date + ' ' + time1
+    socket.to(data.roomName).emit('leftGroup', data)
+    saveEvent('LEAVE_ROOM', data)
     socket.leave(data.roomName)
-    socket.to(data.roomName).emit('leftGroup', { userName: data.userName })
   })
 })
 
