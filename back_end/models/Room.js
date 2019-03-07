@@ -9,6 +9,9 @@ const RoomSchema = new Schema({
   chatHistories: {
     type: Array,
   },
+  eventHistories: {
+    type: Array,
+  },
 })
 
 module.exports = Room = mongoose.model('rooms', RoomSchema)

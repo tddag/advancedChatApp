@@ -18,7 +18,7 @@ class ChatWindow extends Component {
   }
 
   componentDidMount() {
-    let roomName = this.props.match.params.name
+    let roomName = this.props.match.params.name.replace('%20', ' ')
     let userName = this.props.match.params.username
     let activeUsers = this.state.activeUsers
     activeUsers.push({ name: userName })
@@ -66,10 +66,18 @@ class ChatWindow extends Component {
       })
     })
 
+    // Timestamp for event
+    let d = new Date()
+    let date = d.toLocaleDateString()
+    let time = d.toLocaleTimeString()
+    let timeStamp = date + ' ' + time
     // Send activeUser to other members in the group
     socket.emit('activeUser', {
       userName: userName,
       roomName: roomName,
+      data: date,
+      time: time,
+      timeStamp: timeStamp,
     })
 
     // Listen to leftGroup event, then add to event list
@@ -246,7 +254,7 @@ class ChatWindow extends Component {
           <Col xs="3">
             <div className="window">
               <div className="window-head">
-                <h2>Room Status</h2>
+                <h2>Room History</h2>
               </div>
               <div className="list">{this.getEvents()}</div>
             </div>

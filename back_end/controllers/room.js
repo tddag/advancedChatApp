@@ -58,4 +58,28 @@ const saveChat = (io, data) => {
     })
 }
 
-module.exports = { createRoom: createRoom, saveChat: saveChat }
+const saveEvent = (eventType, data) => {
+  Room.update(
+    { name: data.roomName },
+    {
+      $push: {
+        eventHistories: {
+          type: eventType,
+          username: data.userName,
+          date: data.date,
+          time: data.time,
+          timeStamp: data.timeStamp,
+        },
+      },
+    }
+  ).then((err, room) => {
+    if (err) console.log(err)
+    else console.log(room)
+  })
+}
+
+module.exports = {
+  createRoom: createRoom,
+  saveChat: saveChat,
+  saveEvent: saveEvent,
+}

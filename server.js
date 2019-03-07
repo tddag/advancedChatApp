@@ -7,7 +7,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { registerUser } = require('./back_end/controllers/user')
-const { createRoom, saveChat } = require('./back_end/controllers/room')
+const {
+  createRoom,
+  saveChat,
+  saveEvent,
+} = require('./back_end/controllers/room')
 const { saveSocket } = require('./back_end/controllers/socket')
 
 // DB config
@@ -70,15 +74,22 @@ io.on('connection', socket => {
     )
   })
 
-  socket.on('joinRoom', roomName => {
-    socket.join(roomName)
-    saveSocket('JOIN_ROOM', time, socket.id, '', `${roomName} room is created`)
+  socket.on('joinRoom', data => {
+    socket.join(data.roomName)
+    saveSocket(
+      'JOIN_ROOM',
+      time,
+      socket.id,
+      '',
+      `${data.roomName} room is created`
+    )
   })
 
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
     saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
     socket.to(data.roomName).emit('activeUser', { userName: data.userName })
+    saveEvent('JOIN_ROOM', data)
   })
 
   // Announce other members in the group "user has left the group"
