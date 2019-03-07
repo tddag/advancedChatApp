@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import './Users.styles.css'
 import { Button } from 'reactstrap'
 

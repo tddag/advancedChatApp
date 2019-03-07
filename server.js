@@ -7,8 +7,9 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { registerUser } = require('./back_end/controllers/user')
-const { checkHandle } = require('./back_end/controllers/user')
-const createRoom = require('./back_end/controllers/room')
+const { createRoom, saveChat } = require('./back_end/controllers/room')
+const { saveSocket } = require('./back_end/controllers/socket')
+
 // DB config
 const db = require('./back_end/config/keys').mongoURI
 
@@ -42,54 +43,52 @@ const server = http.createServer(app)
 const io = socketIO(server)
 
 io.on('connection', socket => {
-  console.log('user connect', socket.id)
+  let time = new Date()
+  saveSocket('CONNECT', time, socket.id, '', 'User connected')
 
   socket.on('disconnect', () => {
-    console.log('user disconnected')
+    saveSocket('DISCONNECT', time, socket.id, '', 'User disconneced')
   })
 
   socket.on('chat', data => {
-    console.log('test chat')
-    let roomName = data.room
-    console.log(roomName)
-    io.to(roomName).emit('chat', data)
+    saveSocket('CHAT', time, socket.id, '', `${data.user} sent a message`)
+    saveChat(io, data)
   })
 
   socket.on('registerUser', data => {
     registerUser(io, data)
   })
 
-  // Tam - not gonna check for now
-  // socket.on('checkHandle', data => {
-  //   console.log('check handle')
-  //   checkHandle(io, data)
-  // })
-
   socket.on('createRoom', data => {
     createRoom(io, data)
+    saveSocket(
+      'CREATE_ROOM',
+      time,
+      socket.id,
+      '',
+      `${data.name} room is created`
+    )
   })
 
   socket.on('joinRoom', roomName => {
-    console.log('joinTest backend', roomName)
     socket.join(roomName)
+    saveSocket('JOIN_ROOM', time, socket.id, '', `${roomName} room is created`)
   })
 
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
+    saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
     socket.to(data.roomName).emit('activeUser', { userName: data.userName })
   })
 
   // Announce other members in the group "user has left the group"
   socket.on('leftGroup', data => {
+    saveSocket('SAVE_LEFT_GROUP', time, socket.id, '', `save left groups`)
     socket.leave(data.roomName)
     socket.to(data.roomName).emit('leftGroup', { userName: data.userName })
   })
 })
 
-// app.use((req,res,next) => {
-//   req.socketIO = io;
-//   next();
-// })
 // Use route
 // app.use('/api/history', history)
 // app.use('/api/room_history', room_history)

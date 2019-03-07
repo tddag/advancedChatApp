@@ -1,4 +1,5 @@
 const Room = require('../models/Room')
+const Socket = require('../models/Socket')
 
 const createRoom = (io, data) => {
   if (data.name == '') {
@@ -25,4 +26,34 @@ const createRoom = (io, data) => {
   }
 }
 
-module.exports = createRoom
+const saveChat = (io, data) => {
+  io.to(data.room).emit('chat', data)
+
+  Room.update(
+    { name: data.room },
+    {
+      $push: {
+        chatHistories: {
+          userName: data.user,
+          message: data.message,
+          timestamp: new Date(),
+        },
+      },
+    }
+  )
+    .then(() => {
+      Room.findOne({ name: data.room }).then(room => {
+        io.sockets.emit('saveSuccess', {
+          message: 'Store successfully',
+          room: room,
+        })
+      })
+    })
+    .catch(() => {
+      io.sockets.emit('saveFail', {
+        message: 'No room exits',
+      })
+    })
+}
+
+module.exports = { createRoom: createRoom, saveChat: saveChat }
