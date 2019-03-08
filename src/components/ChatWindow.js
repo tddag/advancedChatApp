@@ -34,7 +34,7 @@ class ChatWindow extends Component {
         // Get Message History
         let messageLog = []
         room.chatHistories.map(message => {
-          messageLog.unshift({
+          messageLog.push({
             message: `${message.userName}: ${message.message}`,
             timeStamp: message.timestamp,
           })
@@ -63,7 +63,7 @@ class ChatWindow extends Component {
 
     socket.on('chat', data => {
       let messageLog = this.state.messageLog
-      messageLog.unshift({
+      messageLog.push({
         message: `${data.user}: ${data.message}`,
         timeStamp: data.timeStamp,
       })
@@ -168,14 +168,7 @@ class ChatWindow extends Component {
 
   getEvents = () => {
     return this.state.events.map((event, index) => {
-      return (
-        <div key={index}>
-          <span className="mw-50">{event.event} on </span>
-          <div className="right-0">
-            <i> {event.timeStamp}</i>{' '}
-          </div>
-        </div>
-      )
+      return <div key={index}>{`[${event.timeStamp}]  ${event.event}`}</div>
     })
   }
 

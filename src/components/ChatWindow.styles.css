@@ -10,6 +10,7 @@ h2 {
 
 .window {
   min-height: 500px;
+  max-height: 500px;
   max-width: 600px;
   margin: 30px auto;
   border: 1px solid #ddd;
@@ -42,7 +43,7 @@ h2 {
 }
 
 .list {
-  max-width: 200px;
+  max-height: 400px;
   margin: 20px 10px;
   overflow: auto;
 }
