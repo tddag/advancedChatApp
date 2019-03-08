@@ -44,12 +44,12 @@ class ChatWindow extends Component {
         room.eventHistories.map(event => {
           if (event.type === 'JOIN_ROOM') {
             events.unshift({
-              event: `${event.username} has joined this group`,
+              event: `${event.username} joined this room`,
               timeStamp: event.timeStamp,
             })
           } else if (event.type === 'LEAVE_ROOM') {
             events.unshift({
-              event: `${event.username} has left this group`,
+              event: `${event.username} left this room`,
               timeStamp: event.timeStamp,
             })
           }
@@ -111,7 +111,7 @@ class ChatWindow extends Component {
       let events = this.state.events
       activeUsers.push({ name: data.userName })
       events.unshift({
-        event: `${data.userName} has joined this group`,
+        event: `${data.userName} joined this room`,
         timeStamp: data.timeStamp,
       })
       this.setState({
@@ -231,7 +231,7 @@ class ChatWindow extends Component {
         <h1> Room {this.state.roomName}</h1>
         <Link to={`/rooms`}>
           <Button className="leaveBtn" color="secondary">
-            Leave Group
+            Leave Room
           </Button>
         </Link>
         <Row>
