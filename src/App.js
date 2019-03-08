@@ -8,6 +8,7 @@ import ChatWindow from './components/ChatWindow'
 import { Route, Switch } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 import EventHistory from './components/EventHistory'
+import ChatHistory from './components/ChatHistory'
 
 class App extends Component {
   constructor() {
@@ -38,6 +39,7 @@ class App extends Component {
             )}
           />
           <Route path="/eventHistory" component={EventHistory} />
+          <Route path="/chatHistory" component={ChatHistory} />
         </Switch>
       </div>
     )

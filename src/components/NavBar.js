@@ -36,6 +36,11 @@ class NavBar extends Component {
                 Event History
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/chatHistory">
+                Chat History
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

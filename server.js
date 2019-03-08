@@ -53,7 +53,6 @@ io.on('connection', socket => {
   saveSocket('CONNECT', time, socket.id, '', 'User connected')
 
   socket.on('disconnect', () => {
-    console.log(currentUserName)
     saveSocket('DISCONNECT', time, socket.id, '', 'User disconneced')
     if (currentRoomName !== '') {
       let d = new Date()

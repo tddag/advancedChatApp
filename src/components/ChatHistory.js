@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Table } from 'reactstrap'
 import './EventHistory.styles.css'
 
-class EventHistory extends Component {
+class ChatHistory extends Component {
   constructor() {
     super()
     this.state = {
@@ -21,21 +21,21 @@ class EventHistory extends Component {
       })
   }
 
-  renderRoomEvents = room => {
-    return room.eventHistories.map((event, index) => {
+  renderRoomChat = room => {
+    return room.chatHistories.map((message, index) => {
       return (
         <tr key={index}>
           <th> {index + 1} </th>
-          <td> {event.username} </td>
-          <td> {event.type} </td>
-          <td> {event.date} </td>
-          <td> {event.time} </td>
+          <td> {message.userName} </td>
+          <td> {message.message} </td>
+          <td> {message.date} </td>
+          <td> {message.time} </td>
         </tr>
       )
     })
   }
 
-  renderEvents = () => {
+  renderChats = () => {
     return this.state.rooms.map((room, index) => {
       return (
         <div key={index}>
@@ -44,13 +44,13 @@ class EventHistory extends Component {
             <thead>
               <tr>
                 <th> # </th>
-                <th> User </th>
-                <th> Type </th>
+                <th> Sender </th>
+                <th> Message </th>
                 <th> Date </th>
                 <th> Time </th>
               </tr>
             </thead>
-            <tbody>{this.renderRoomEvents(room)}</tbody>
+            <tbody>{this.renderRoomChat(room)}</tbody>
           </Table>
         </div>
       )
@@ -60,11 +60,11 @@ class EventHistory extends Component {
   render() {
     return (
       <Container>
-        <h1> Event History</h1>
-        <div>{this.renderEvents()}</div>
+        <h1> Chat History </h1>
+        <div> {this.renderChats()}</div>
       </Container>
     )
   }
 }
 
-export default EventHistory
+export default ChatHistory
