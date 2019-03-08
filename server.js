@@ -53,15 +53,17 @@ io.on('connection', socket => {
   saveSocket('CONNECT', time, socket.id, '', 'User connected')
 
   socket.on('disconnect', () => {
+    console.log(currentUserName)
     saveSocket('DISCONNECT', time, socket.id, '', 'User disconneced')
     if (currentRoomName !== '') {
-      io.to(currentRoomName).emit('leftGroup', {
-        userName: currentUserName,
-      })
       let d = new Date()
       let date = d.toLocaleDateString()
       let time = d.toLocaleTimeString()
       let timeStamp = date + ' ' + time
+      io.to(currentRoomName).emit('leftGroup', {
+        userName: currentUserName,
+        timeStamp: timeStamp,
+      })
       saveEvent('LEAVE_ROOM', {
         userName: currentUserName,
         roomName: currentRoomName,
@@ -95,7 +97,6 @@ io.on('connection', socket => {
   socket.on('joinRoom', data => {
     socket.join(data.roomName)
     currentRoomName = data.roomName
-    currentUserName = data.username
     saveSocket(
       'JOIN_ROOM',
       time,
@@ -108,6 +109,7 @@ io.on('connection', socket => {
 
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
+    currentUserName = data.userName
     saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
     io.in(data.roomName).emit('activeUser', data)
   })
