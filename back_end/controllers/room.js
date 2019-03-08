@@ -29,7 +29,7 @@ const createRoom = (io, data) => {
 const saveChat = (io, data) => {
   io.to(data.room).emit('chat', data)
 
-  Room.update(
+  Room.updateOne(
     { name: data.room },
     {
       $push: {
@@ -59,7 +59,7 @@ const saveChat = (io, data) => {
 }
 
 const saveEvent = (eventType, data) => {
-  Room.update(
+  Room.updateOne(
     { name: data.roomName },
     {
       $push: {
@@ -72,7 +72,7 @@ const saveEvent = (eventType, data) => {
         },
       },
     }
-  ).then()
+  ).then((err, room) => {})
 }
 
 module.exports = {
