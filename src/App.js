@@ -7,6 +7,7 @@ import Users from './components/Users'
 import ChatWindow from './components/ChatWindow'
 import { Route, Switch } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
+import EventHistory from './components/EventHistory'
 
 class App extends Component {
   constructor() {
@@ -36,6 +37,7 @@ class App extends Component {
               <ChatWindow {...props} socket={this.state.socket} />
             )}
           />
+          <Route path="/eventHistory" component={EventHistory} />
         </Switch>
       </div>
     )

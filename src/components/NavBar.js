@@ -21,7 +21,7 @@ class NavBar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
-            <li className="nav-item active">
+            <li className="nav-item ">
               <Link className="nav-link" to="/rooms">
                 Room Chat
               </Link>
@@ -29,6 +29,11 @@ class NavBar extends Component {
             <li className="nav-item">
               <Link className="nav-link" to="/users">
                 Users
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/eventHistory">
+                Event History
               </Link>
             </li>
           </ul>
