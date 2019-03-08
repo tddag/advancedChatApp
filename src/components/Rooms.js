@@ -26,7 +26,7 @@ class Rooms extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:4000/room/get/all')
+    fetch('/room/get/all')
       .then(res => res.json())
       .then(rooms => {
         this.setState({
@@ -36,7 +36,7 @@ class Rooms extends Component {
     let { socket } = this.props
 
     // get all the users
-    fetch('http://localhost:4000/user/get/all')
+    fetch('/user/get/all')
       .then(res => res.json())
       .then(users => {
         this.setState({

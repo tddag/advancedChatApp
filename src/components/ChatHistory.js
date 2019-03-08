@@ -12,7 +12,7 @@ class ChatHistory extends Component {
 
   componentDidMount() {
     // Get all rooms
-    fetch('http://localhost:4000/room/get/all')
+    fetch('/room/get/all')
       .then(res => res.json())
       .then(rooms => {
         this.setState({

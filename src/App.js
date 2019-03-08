@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      socket: socketIOClient('http://localhost:4000'),
+      socket: socketIOClient('/'),
     }
   }
 

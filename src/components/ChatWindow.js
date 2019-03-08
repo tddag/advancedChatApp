@@ -28,7 +28,7 @@ class ChatWindow extends Component {
     let { socket } = this.props
 
     // Get Chat History
-    fetch(`http://localhost:4000/room/get/${roomName}`)
+    fetch(`/room/get/${roomName}`)
       .then(res => res.json())
       .then(room => {
         // Get Message History

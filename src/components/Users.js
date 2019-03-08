@@ -14,7 +14,7 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:4000/user/get/all')
+    fetch('/user/get/all')
       .then(res => res.json())
       .then(users => {
         this.setState({
