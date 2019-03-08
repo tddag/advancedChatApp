@@ -32,8 +32,6 @@ const room = require('./back_end/routes/room')
 
 const app = express()
 
-app.use(cors())
-
 // / parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -45,6 +43,8 @@ const server = http.createServer(app)
 
 // Create IO using server instance
 const io = socketIO(server)
+
+app.use(cors())
 
 io.on('connection', socket => {
   let currentRoomName = ''
