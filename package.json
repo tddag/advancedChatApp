@@ -14,7 +14,6 @@
     "lint:write": "eslint --debug src/ back_end/ --fix",
     "prettier": "prettier --write src/**/*.js back_end/**/*.js"
   },
-  "proxy": "http://localhost:4000",
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
