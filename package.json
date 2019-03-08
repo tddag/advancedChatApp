@@ -4,11 +4,10 @@
   "description": "advanced chat app - COMP3133 project",
   "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
     "lint": "eslint --debug src/ back_end/",
     "lint:write": "eslint --debug src/ back_end/ --fix",
