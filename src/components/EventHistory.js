@@ -29,7 +29,7 @@ class EventHistory extends Component {
           <th> {index + 1} </th>
           <td> {event.username} </td>
           <td> {event.type} </td>
-          <td> {event.date} </td> <th> {event.date} </th>
+          <td> {event.date} </td>
           <td> {event.time} </td>
         </tr>
       )
@@ -41,14 +41,13 @@ class EventHistory extends Component {
       return (
         <div key={index}>
           <h2> Room: {room.name}</h2>
-          <Table hover>
+          <Table striped>
             <thead>
               <tr>
                 <th> # </th>
                 <th> User </th>
                 <th> Type </th>
                 <th> Date </th>
-                <th> Time </th>
                 <th> Time </th>
               </tr>
             </thead>

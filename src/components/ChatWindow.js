@@ -131,7 +131,7 @@ class ChatWindow extends Component {
     socket.emit('leftGroup', {
       roomName: this.state.roomName,
       userName: this.state.userName,
-      data: date,
+      date: date,
       time: time,
       timeStamp: timeStamp,
     })

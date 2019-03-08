@@ -65,7 +65,7 @@ io.on('connection', socket => {
       saveEvent('LEAVE_ROOM', {
         userName: currentUserName,
         roomName: currentRoomName,
-        data: date,
+        date: date,
         time: time,
         timeStamp: timeStamp,
       })
