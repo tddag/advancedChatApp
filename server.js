@@ -146,6 +146,13 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
+app.use(express.static('build'))
+
+// Set default file for all routes
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
 // Set port
 const port = process.env.PORT || 4000
 
