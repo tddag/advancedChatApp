@@ -1,4 +1,4 @@
-# advancedChatApp
+# ChatApp
 
 # A Chat App using MERN Stack and Socket.IO
 # live Demo:
