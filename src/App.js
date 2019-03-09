@@ -19,7 +19,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      socket: socketIOClient(uri),
+      socket: socketIOClient(`${uri}`),
     }
   }
 
