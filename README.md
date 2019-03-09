@@ -2,7 +2,7 @@
 
 # A Chat App using MERN Stack and Socket.IO
 # Live Demo:
-https://taha-app-chat.herokuapp.com/rooms
+https://taha-app-chat.herokuapp.com
 
 # Members:
 - Danh Tam Dang (101092895)
