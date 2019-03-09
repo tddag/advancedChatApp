@@ -9,10 +9,10 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
-let uri =
-  process.env.NODE_ENV === 'production'
-    ? 'https://taha-chatapp.herokuapp.com/'
-    : 'http://localhost:4000'
+// let uri =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://taha-chatapp.herokuapp.com/'
+//     : 'http://localhost:4000'
 // let uri = 'https://taha-chatapp.herokuapp.com/'
 class Rooms extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Rooms extends Component {
   }
 
   componentDidMount() {
-    fetch(`${uri}/room/get/all`)
+    fetch(`/room/get/all`)
       .then(res => res.json())
       .then(rooms => {
         this.setState({
@@ -41,7 +41,7 @@ class Rooms extends Component {
     let { socket } = this.props
 
     // get all the users
-    fetch(`${uri}/user/get/all`)
+    fetch(`/user/get/all`)
       .then(res => res.json())
       .then(users => {
         this.setState({

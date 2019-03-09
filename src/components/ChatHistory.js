@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Container, Table } from 'reactstrap'
 import './EventHistory.styles.css'
 
-let uri =
-  process.env.NODE_ENV === 'production'
-    ? 'https://taha-chatapp.herokuapp.com/'
-    : 'http://localhost:4000'
+// let uri =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://taha-chatapp.herokuapp.com/'
+//     : 'http://localhost:4000'
 // let uri = 'https://taha-chatapp.herokuapp.com/'
 class ChatHistory extends Component {
   constructor() {
@@ -17,7 +17,7 @@ class ChatHistory extends Component {
 
   componentDidMount() {
     // Get all rooms
-    fetch(`${uri}/room/get/all`)
+    fetch(`/room/get/all`)
       .then(res => res.json())
       .then(rooms => {
         this.setState({
