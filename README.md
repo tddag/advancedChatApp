@@ -1,7 +1,7 @@
 # ChatApp
 
 # A Chat App using MERN Stack and Socket.IO
-# live Demo:
+# Live Demo:
 https://taha-app-chat.herokuapp.com/rooms
 
 # Members:
