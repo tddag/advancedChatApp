@@ -10,7 +10,8 @@
     "eject": "react-scripts eject",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "author": "Tam Dang, Hao Bui",
   "license": "ISC",
