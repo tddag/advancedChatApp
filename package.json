@@ -10,6 +10,7 @@
     "eject": "react-scripts eject",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "lint": "eslint --debug src/ back_end/",
     "lint:write": "eslint --debug src/ back_end/ --fix",
     "prettier": "prettier --write src/**/*.js back_end/**/*.js"
