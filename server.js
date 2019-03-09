@@ -127,7 +127,6 @@ io.on('connection', socket => {
     socket.leave(data.roomName)
   })
 })
-
 // Use route
 // app.use('/api/history', history)
 // app.use('/api/room_history', room_history)
