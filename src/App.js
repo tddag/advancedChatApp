@@ -10,11 +10,14 @@ import socketIOClient from 'socket.io-client'
 import EventHistory from './components/EventHistory'
 import ChatHistory from './components/ChatHistory'
 
+let uri = process.env.NODE_ENV === 'production'
+            ? 'https://taha-app-chat.herokuapp.com/'
+            : 'http://localhost:4000'
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      socket: socketIOClient('http://localhost:4000'),
+      socket: socketIOClient(`${uri}`),
     }
   }
 
