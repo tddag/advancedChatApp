@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import './Users.styles.css'
 import { Button } from 'reactstrap'
 
-// let uri =
-//   process.env.NODE_ENV === 'production'
-//     ? 'https://taha-chatapp.herokuapp.com/'
-//     : 'http://localhost:4000'
-let uri = 'https://taha-chatapp.herokuapp.com/'
+let uri =
+  process.env.NODE_ENV === 'production'
+    ? 'https://taha-chatapp.herokuapp.com/'
+    : 'http://localhost:4000'
+// let uri = 'https://taha-chatapp.herokuapp.com/'
 class Users extends Component {
   constructor(props) {
     super(props)

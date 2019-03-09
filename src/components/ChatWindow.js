@@ -3,11 +3,11 @@ import './ChatWindow.styles.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-// let uri =
-//   process.env.NODE_ENV === 'production'
-//     ? 'https://taha-chatapp.herokuapp.com/'
-//     : 'http://localhost:4000'
-let uri = 'https://taha-chatapp.herokuapp.com/'
+let uri =
+  process.env.NODE_ENV === 'production'
+    ? 'https://taha-chatapp.herokuapp.com/'
+    : 'http://localhost:4000'
+// let uri = 'https://taha-chatapp.herokuapp.com/'
 class ChatWindow extends Component {
   constructor() {
     super()
