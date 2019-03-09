@@ -3,10 +3,6 @@ import './ChatWindow.styles.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-let uri =
-  process.env.NODE_ENV === 'production'
-    ? 'https://taha-chatapp.herokuapp.com/'
-    : 'http://localhost:4000'
 class ChatWindow extends Component {
   constructor() {
     super()
@@ -32,7 +28,7 @@ class ChatWindow extends Component {
     let { socket } = this.props
 
     // Get Chat History
-    fetch(`${uri}/room/get/${roomName}`)
+    fetch(`/room/get/${roomName}`)
       .then(res => res.json())
       .then(room => {
         // Get Message History

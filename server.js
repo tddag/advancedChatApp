@@ -24,9 +24,6 @@ mongoose
   .catch(err => console.log(err))
 
 // Import routes
-const history = require('./back_end/routes/api/history')
-const room_history = require('./back_end/routes/api/room_history')
-const events = require('./back_end/routes/api/events')
 const user = require('./back_end/routes/user')
 const room = require('./back_end/routes/room')
 
