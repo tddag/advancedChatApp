@@ -126,9 +126,6 @@ io.on('connection', socket => {
 })
 
 // Use route
-// app.use('/api/history', history)
-// app.use('/api/room_history', room_history)
-// app.use('/api/events', events)
 app.use('/user', user)
 app.use('/room', room)
 

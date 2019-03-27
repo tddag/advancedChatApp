@@ -1,11 +1,29 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 class NavBar extends Component {
   constructor(props){
     super(props)
     this.state={
+      userName: '',
       loggedIn: false
+    }
+  }
+  handleLogOut = () => {
+    localStorage.removeItem('jwtToken')
+    this.setState({
+      loggedIn: false,
+      userName: ''
+    })
+  }
+  componentDidMount(){
+    let token = localStorage.getItem('jwtToken')
+    if(token){
+      this.setState({
+        loggedIn: true,
+        userName: jwt_decode(token).name
+      })
     }
   }
   render() {
@@ -50,26 +68,31 @@ class NavBar extends Component {
           </ul>
           <ul class="navbar-nav">
             {
-              this.state.loggedIn &&
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Username
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Logout</a>
-                </div>
-              </li>
+              this.state.loggedIn ?
+                (
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Welcome <b>{this.state.userName}!</b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#" onClick={this.handleLogOut}>Logout</a>
+                    </div>
+                  </li>
+                ) : (
+                  <div style={{display: 'inherit'}}>
+                    <li className="nav-item mr-auto">
+                      <Link className="nav-link" to="/login">
+                        Login
+                      </Link>
+                    </li>
+                    <li className="nav-item mr-auto">
+                      <Link className="nav-link" to="/register">
+                        Register
+                      </Link>
+                    </li>
+                  </div>
+                )
             }
-            <li className="nav-item mr-auto">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item mr-auto">
-              <Link className="nav-link" to="/register">
-                Register
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>

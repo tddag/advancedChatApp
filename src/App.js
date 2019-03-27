@@ -45,9 +45,9 @@ class App extends Component {
           />
           <Route path="/eventHistory" component={EventHistory} />
           <Route path="/chatHistory" component={ChatHistory} />
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
         </Switch>
+        <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
       </div>
     )
   }
