@@ -32,7 +32,7 @@ router.post('/register', (req, res) => {
                 password: hash
               })
               newUser.save()
-                .then(() => res.status(200).json(user))
+                .then((newUser) => res.status(200).json(newUser))
             }
           })
         })
