@@ -11,7 +11,7 @@ import EventHistory from './components/history/EventHistory'
 import ChatHistory from './components/history/ChatHistory'
 import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
-
+import AlertUnauthorized from './components/AlertUnauthorized'
 let uri = process.env.NODE_ENV === 'production'
             ? 'https://taha-app-chat.herokuapp.com/'
             : 'http://localhost:4000'
@@ -37,14 +37,20 @@ class App extends Component {
             path="/users"
             render={() => <Users socket={this.state.socket} />}
           />
-          <Route
-            path="/chat/:name&:username"
-            render={props => (
-              <ChatWindow {...props} socket={this.state.socket} />
-            )}
-          />
-          <Route path="/eventHistory" component={EventHistory} />
-          <Route path="/chatHistory" component={ChatHistory} />
+          {!localStorage.getItem('jwtToken') ? (
+            <AlertUnauthorized/>
+          ) : (
+            <div>
+              <Route
+                path="/chat/:name&:username"
+                render={props => (
+                  <ChatWindow {...props} socket={this.state.socket} />
+                )}
+              />
+              <Route path="/eventHistory" component={EventHistory} />
+              <Route path="/chatHistory" component={ChatHistory} />
+            </div>
+          )}
         </Switch>
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>

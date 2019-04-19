@@ -46,12 +46,10 @@ router.post('/register', (req, res) => {
 // login user
 router.post('/login', (req, res) => {
   let { email, password } = req.body
-
+  let error = ''
   User.findOne({email})
     .then(user => {
-      console.log(user)
       if(user){
-        console.log(password)
         bcrypt.compare(password, user.password)
           .then(match => {
             if(match){

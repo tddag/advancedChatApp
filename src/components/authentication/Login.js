@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import './Login.styles.css'
 import axios from 'axios'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 export default class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
       email: '',
       password: '',
-      loggedIn: false
+      loggedIn: false,
+      open: false,
+      error: '',
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -25,6 +32,12 @@ export default class Login extends Component {
       password: event.target.value
     })
   }
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
   handleSubmit = (event) => {
     let { email, password } = this.state
     axios.post('/user/login', {
@@ -34,6 +47,13 @@ export default class Login extends Component {
       localStorage.setItem('jwtToken', res.data)
       this.setState({
         loggedIn: true
+      })
+    }).catch(err => {
+      let msg = err.response.data.msg
+      console.log(msg)
+      this.setState({
+        error: msg,
+        open: true
       })
     })
     event.preventDefault()
@@ -50,6 +70,21 @@ export default class Login extends Component {
           <br/>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
+        { this.state.error !== '' && (
+          <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{`Sorry! ${this.state.error}`}</DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        ) }
       </div>
     )
   }

@@ -79,7 +79,7 @@ class NavBar extends Component {
                     </div>
                   </li>
                 ) : (
-                  <div style={{display: 'inherit'}}>
+                  <div style={{display: window.innerWidth > 791 ? 'inherit' : 'block' }}>
                     <li className="nav-item mr-auto">
                       <Link className="nav-link" to="/login">
                         Login

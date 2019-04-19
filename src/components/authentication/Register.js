@@ -9,7 +9,16 @@ export default class Register extends Component {
       email: '',
       password: '',
       registerStatus: '',
+      timer: 5,
     }
+  }
+  handleCountDown = (timer) => {
+    setTimeout(()=>{
+      this.setState({
+        timer: timer
+      })
+      return timer != 1 ? this.handleCountDown(timer-1) : timer
+    }, 1000)
   }
   handleName = (event) => {
     this.setState({
@@ -55,32 +64,33 @@ export default class Register extends Component {
     event.preventDefault()
   }
   render(){
-    if (this.state.registerStatus !== 'successful') {
       return(
         <div class="text-center loginContainer">
-          <form class="form-signin" onSubmit={this.handleSubmit}>
-            <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-            { this.state.registerStatus == 'failed' ? (<p class="text-danger" id="errorMessage">Email is exist! Try another one!!!</p>) : ('')}
-            <label for="inputName" class="sr-only">Name</label>
-            <input type="text" id="inputName" class="form-control" placeholder="Name" onChange={this.handleName} required autofocus/>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" onChange={this.handleEmail} required/>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" onChange={this.handlePassword} required/>
-            <br/>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-          </form>
-        </div>
-      )
-    } else {
-      return(
-        <div class="text-center">
-          <h3 class="text-success"> Congratulation!! You have successfully registed!!! 
-            Redirecting to login page after 5 seconds!!
-          </h3>
+          { this.state.registerStatus !== 'successful' ?
+            (
+              <form class="form-signin" onSubmit={this.handleSubmit}>
+                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                { this.state.registerStatus == 'failed' ? (<p class="text-danger" id="errorMessage">Email is exist! Try another one!!!</p>) : ('')}
+                <label for="inputName" class="sr-only">Name</label>
+                <input type="text" id="inputName" class="form-control" placeholder="Name" onChange={this.handleName} required autofocus/>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" onChange={this.handleEmail} required/>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" onChange={this.handlePassword} required/>
+                <br/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+              </form>
+            ) :
+            (
+              <div class="text-center">
+                {this.handleCountDown(this.state.timer)}
+                <h3 class="text-success"> Congratulation!! You have successfully registed!!!
+                  Redirecting to login page after {this.state.timer} seconds!!
+                </h3>
+              </div>
+            )
+          }
         </div>
       )
     }
-    
-  }
 }

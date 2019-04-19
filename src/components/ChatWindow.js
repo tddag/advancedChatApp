@@ -172,13 +172,6 @@ class ChatWindow extends Component {
     })
   }
 
-  // Tam - Username is set by default
-  // nameChange = e => {
-  //   this.setState({
-  //     userName: e.target.value,
-  //   })
-  // }
-
   messageChange = e => {
     this.setState({
       message: e.target.value,
@@ -213,16 +206,6 @@ class ChatWindow extends Component {
       date: date,
       time: time,
     })
-    // Tam - not gonna check for now
-    // socket.emit('checkHandle', {
-    //   user: this.state.userName,
-    // })
-
-    // socket.on('checkFail', data => {
-    //   this.setState({
-    //     error: data.message,
-    //   })
-    // })
   }
 
   render() {

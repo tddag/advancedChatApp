@@ -7,11 +7,6 @@
   user-select: none;
 }
 
-.loginContainer {
-  width: 20%;
-  margin: 0 auto
-}
-
 input {
   margin-bottom: 10px
 }
@@ -19,5 +14,9 @@ input {
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
+  }
+  .loginContainer {
+    width: 20%;
+    margin: 0 auto
   }
 }
