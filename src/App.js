@@ -13,7 +13,7 @@ import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
 import AlertUnauthorized from './components/AlertUnauthorized'
 let uri = process.env.NODE_ENV === 'production'
-            ? 'https://taha-app-chat.herokuapp.com/'
+            ? 'https://taha-chatapp.herokuapp.com/'
             : 'http://localhost:4000'
 class App extends Component {
   constructor() {
