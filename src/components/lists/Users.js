@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './Users.styles.css'
 import { Button } from 'reactstrap'
-
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 class Users extends Component {
   constructor(props) {
     super(props)
@@ -14,7 +16,7 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    fetch(`/user/get/all`)
+    fetch(`${uri}/user/get/all`)
       .then(res => res.json())
       .then(users => {
         this.setState({

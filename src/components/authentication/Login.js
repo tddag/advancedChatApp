@@ -6,6 +6,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
+
 export default class Login extends Component {
   constructor(props){
     super(props)
@@ -40,7 +44,7 @@ export default class Login extends Component {
   };
   handleSubmit = (event) => {
     let { email, password } = this.state
-    axios.post('/user/login', {
+    axios.post(`${uri}/user/login`, {
       email: email,
       password: password
     }).then(res => {

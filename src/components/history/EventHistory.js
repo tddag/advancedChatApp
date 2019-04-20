@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Container, Table } from 'reactstrap'
 import './EventHistory.styles.css'
-
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 class EventHistory extends Component {
   constructor() {
     super()
@@ -12,7 +14,7 @@ class EventHistory extends Component {
 
   componentDidMount() {
     // Get all rooms
-    fetch(`/room/get/all`)
+    fetch(`${uri}/room/get/all`)
       .then(res => res.json())
       .then(rooms => {
         this.setState({

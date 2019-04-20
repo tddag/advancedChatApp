@@ -10,6 +10,9 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 class Rooms extends Component {
   constructor(props) {
     super(props)
@@ -33,7 +36,7 @@ class Rooms extends Component {
         username: jwt_decode(token).name
       })
     }
-    fetch(`/room/get/all`)
+    fetch(`${uri}/room/get/all`)
       .then(res => res.json())
       .then(rooms => {
         this.setState({
@@ -43,7 +46,7 @@ class Rooms extends Component {
     let { socket } = this.props
 
     // get all the users
-    fetch(`/user/get/all`)
+    fetch(`${uri}/user/get/all`)
       .then(res => res.json())
       .then(users => {
         this.setState({

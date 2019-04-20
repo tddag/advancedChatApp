@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
 import './Landing.styles.css'
 import jwt_decode from 'jwt-decode'
-
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 class Landing extends Component {
   constructor() {
     super() 
@@ -40,7 +42,7 @@ class Landing extends Component {
       timeStamp: timeStamp,
     })
     // Get Chat History
-    fetch(`/room/get/${this.state.roomName}`)
+    fetch(`${uri}/room/get/${this.state.roomName}`)
       .then(res => res.json())
       .then(room => {
         // Get Message History

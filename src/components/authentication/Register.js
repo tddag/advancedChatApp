@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import './Login.styles.css'
 import axios from 'axios'
+
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 export default class Register extends Component {
   constructor(props){
     super(props)
@@ -37,7 +41,7 @@ export default class Register extends Component {
   }
   handleSubmit = (event) => {
     let { name, email, password } = this.state
-    axios.post('/user/register', {
+    axios.post(`${uri}/user/register`, {
       name: name,
       email: email,
       password: password

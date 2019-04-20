@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import './ChatWindow.styles.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
-
+let uri = process.env.NODE_ENV === 'production'
+            ? ''
+            : 'http://localhost:4000'
 class ChatWindow extends Component {
   constructor() {
     super()
@@ -27,7 +29,7 @@ class ChatWindow extends Component {
     let { socket } = this.props
 
     // Get Chat History
-    fetch(`/room/get/${roomName}`)
+    fetch(`${uri}/room/get/${roomName}`)
       .then(res => res.json())
       .then(room => {
         // Get Message History
