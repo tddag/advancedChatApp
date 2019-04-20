@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import './Landing.styles.css'
 import jwt_decode from 'jwt-decode'
 

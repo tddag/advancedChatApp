@@ -17,7 +17,7 @@ export default class Register extends Component {
       this.setState({
         timer: timer
       })
-      return timer != 1 ? this.handleCountDown(timer-1) : timer
+      return timer !== 1 ? this.handleCountDown(timer-1) : timer
     }, 1000)
   }
   handleName = (event) => {
@@ -70,7 +70,7 @@ export default class Register extends Component {
             (
               <form class="form-signin" onSubmit={this.handleSubmit}>
                 <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-                { this.state.registerStatus == 'failed' ? (<p class="text-danger" id="errorMessage">Email is exist! Try another one!!!</p>) : ('')}
+                { this.state.registerStatus === 'failed' ? (<p class="text-danger" id="errorMessage">Email is exist! Try another one!!!</p>) : ('')}
                 <label for="inputName" class="sr-only">Name</label>
                 <input type="text" id="inputName" class="form-control" placeholder="Name" onChange={this.handleName} required autofocus/>
                 <label for="inputEmail" class="sr-only">Email address</label>

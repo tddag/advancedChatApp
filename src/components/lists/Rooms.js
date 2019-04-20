@@ -4,9 +4,6 @@ import './Rooms.styles.css'
 import jwt_decode from 'jwt-decode'
 import {
   Button,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
   DropdownItem,
 } from 'reactstrap'
 
