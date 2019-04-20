@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Rooms.styles.css'
+import jwt_decode from 'jwt-decode'
 import {
   Button,
   ButtonDropdown,
@@ -26,6 +27,12 @@ class Rooms extends Component {
   }
 
   componentDidMount() {
+    let token = localStorage.getItem('jwtToken')
+    if(token){
+      this.setState({
+        username: jwt_decode(token).name
+      })
+    }
     fetch(`/room/get/all`)
       .then(res => res.json())
       .then(rooms => {
@@ -137,7 +144,7 @@ class Rooms extends Component {
   render() {
     return (
       <div>
-        <div className="dropdown-user">
+        {/* <div className="dropdown-user">
           <ButtonDropdown
             direction="right"
             isOpen={this.state.dropdownOpen}
@@ -146,7 +153,7 @@ class Rooms extends Component {
             <DropdownToggle caret>Choose a User</DropdownToggle>
             <DropdownMenu>{this.renderUsers()}</DropdownMenu>
           </ButtonDropdown>
-        </div>
+        </div> */}
         <div className="ml-100">
           <h2>
             You will be joining a room as <b> {this.state.username}</b>

@@ -16,6 +16,7 @@ class NavBar extends Component {
       loggedIn: false,
       userName: ''
     })
+    window.location.assign('/');
   }
   componentDidMount(){
     let token = localStorage.getItem('jwtToken')
@@ -44,7 +45,8 @@ class NavBar extends Component {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav mr-auto">
+          { this.state.loggedIn ? (
+            <ul className="navbar-nav mr-auto">
             <li className="nav-item ">
               <Link className="nav-link" to="/rooms">
                 Room Chat
@@ -66,6 +68,9 @@ class NavBar extends Component {
               </Link>
             </li>
           </ul>
+            ) : ('')
+          }
+          
           <ul class="navbar-nav">
             {
               this.state.loggedIn ?

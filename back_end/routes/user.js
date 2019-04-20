@@ -41,6 +41,9 @@ router.post('/register', (req, res) => {
         console.log('Email is already used')
       }
     })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 // login user

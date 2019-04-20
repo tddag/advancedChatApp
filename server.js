@@ -93,6 +93,7 @@ io.on('connection', socket => {
   socket.on('joinRoom', data => {
     socket.join(data.roomName)
     currentRoomName = data.roomName
+    currentUserName = data.userName
     saveSocket(
       'JOIN_ROOM',
       time,
@@ -103,11 +104,15 @@ io.on('connection', socket => {
     saveEvent('JOIN_ROOM', data)
   })
 
+  socket.on('nameChange', data => {
+    currentUserName = data.newName
+  })
+
   // Send activeUser to other members in the group
   socket.on('activeUser', data => {
     currentUserName = data.userName
     saveSocket('SAVE_ACTIVE_USERS', time, socket.id, '', `save active users`)
-    io.in(data.roomName).emit('activeUser', data)
+    socket.to(data.roomName).emit('activeUser', data)
   })
 
   // Announce other members in the group "user has left the group"
@@ -122,6 +127,10 @@ io.on('connection', socket => {
     socket.to(data.roomName).emit('leftGroup', data)
     saveEvent('LEAVE_ROOM', data)
     socket.leave(data.roomName)
+  })
+
+  socket.on('allActiveUsers', data => {
+    io.in(data.roomName).emit('allActiveUsers', data.allUsers)
   })
 })
 

@@ -28,7 +28,9 @@ class App extends Component {
       <div>
         <NavBar />
         <Switch>
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/" 
+            render = {() => <Landing socket={this.state.socket}/>}
+          />
           <Route
             path="/rooms"
             render={() => <Rooms socket={this.state.socket} />}
@@ -37,6 +39,8 @@ class App extends Component {
             path="/users"
             render={() => <Users socket={this.state.socket} />}
           />
+          <Route path="/login" component={Login}/>
+          <Route path="/register" component={Register}/>
           {!localStorage.getItem('jwtToken') ? (
             <AlertUnauthorized/>
           ) : (
@@ -52,8 +56,7 @@ class App extends Component {
             </div>
           )}
         </Switch>
-        <Route path="/login" component={Login}/>
-        <Route path="/register" component={Register}/>
+        
       </div>
     )
   }

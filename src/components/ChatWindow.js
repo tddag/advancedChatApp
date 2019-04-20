@@ -20,7 +20,6 @@ class ChatWindow extends Component {
   componentDidMount() {
     let roomName = this.props.match.params.name.replace('%20', ' ')
     let userName = this.props.match.params.username
-    let activeUsers = this.state.activeUsers
     this.setState({
       roomName: roomName,
       userName: userName,
@@ -61,22 +60,30 @@ class ChatWindow extends Component {
         })
       })
 
+      socket.on('allActiveUsers', data => {
+        let currentActiveUsers = data
+        this.setState({
+          activeUsers: currentActiveUsers
+        })
+      })
+
     socket.on('chat', data => {
       let messageLog = this.state.messageLog
       messageLog.push({
         message: `${data.user}: ${data.message}`,
         timeStamp: data.timeStamp,
       })
-      // Check if in activeUsers
-      let activeUsers = this.state.activeUsers
-      if (!this.isActiveUser(data.user)) {
-        activeUsers.push({ name: data.user })
-      }
       this.setState({
         messageLog: messageLog,
-        activeUsers: activeUsers,
       })
     })
+
+    let activeUsers = this.state.activeUsers
+      activeUsers.push({name: userName})
+      this.setState({
+        activeUsers: activeUsers
+    })
+    console.log(this.state)
 
     // Timestamp for event
     let d = new Date()
@@ -102,12 +109,21 @@ class ChatWindow extends Component {
       this.setState({
         events: events,
       })
-      if (this.isActiveUser) this.removeActiveUser(data.userName)
+      let activeUsers = this.state.activeUsers
+      for (let i = 0; i < activeUsers.length; i++) {
+        if (activeUsers[i].name === data.userName) {
+          activeUsers.splice(i, 1)
+        }
+      }
+      socket.emit('allActiveUsers', {
+        roomName: this.state.roomName,
+        allUsers: activeUsers
+      })
     })
 
     // Listen to activeUser event when new user joins the group
     socket.on('activeUser', data => {
-      // let activeUsers = this.state.activeUsers
+      let activeUsers = this.state.activeUsers
       let events = this.state.events
       activeUsers.push({ name: data.userName })
       events.unshift({
@@ -117,6 +133,10 @@ class ChatWindow extends Component {
       this.setState({
         activeUsers: activeUsers,
         events: events,
+      })
+      socket.emit('allActiveUsers', {
+        roomName: this.state.roomName,
+        allUsers: this.state.activeUsers
       })
     })
   }
