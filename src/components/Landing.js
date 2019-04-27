@@ -220,7 +220,7 @@ class Landing extends Component {
         <Container>
         <h1> General Room</h1>
         <Row>
-          <Col xs="3">
+          <Col className="cl-3 activeUser">
             <div className="window">
               <div className="window-head">
                 <h2>Active User</h2>
@@ -228,7 +228,7 @@ class Landing extends Component {
               <div className="list">{this.getActiveUsers()}</div>
             </div>
           </Col>
-          <Col>
+          <Col className="cl-8">
             <div id="mario-chat">
               <h2>Chat</h2>
               <div id="chat-window">
